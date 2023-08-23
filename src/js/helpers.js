@@ -28,3 +28,18 @@ export const AJAX = async function (url, uploadData = undefined) {
     throw err;
   }
 };
+
+export const DELETE_AJAX = async function (url) {
+  try {
+    const res = await Promise.race([
+      fetch(url, { method: 'DELETE' }),
+      timeout(TIMEOUT_SEC),
+    ]);
+    if (!res.ok)
+      throw new Error(
+        `Something went wrong with delete ${res.status} (${res.toString()})`
+      );
+  } catch (err) {
+    throw err;
+  }
+};

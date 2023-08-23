@@ -80,6 +80,30 @@ const controlAddBookmark = function () {
   bookmarksView.render(model.state.bookmarks);
 };
 
+const controlDeleteUserRecipe = async function () {
+  try {
+    if (!model.state.recipe.key) return;
+    await model.deleteUserRecipe();
+
+    // restore the recipe view to start
+    recipeView.renderStartingView();
+
+    // update the bookmarks view since user recipe is deleted
+    bookmarksView.render(model.state.bookmarks);
+
+    // remove the hash from the url
+    window.history.replaceState('', document.title, window.location.pathname);
+
+    if (model.state.search.results.length === 0) return;
+    resultsView.render(model.getSearchResultsPage(1));
+    paginationView.render(model.state.search);
+
+    // remove the hash from the url
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 const controlBookmarks = function () {
   bookmarksView.render(model.state.bookmarks);
 };
@@ -119,6 +143,7 @@ const init = function () {
   recipeView.addHandlerRender(controlRecipes);
   recipeView.addHandlerUpdateServings(controlServings);
   recipeView.addHandlerAddBookmark(controlAddBookmark);
+  recipeView.addHandlerDeleteUserRecipe(controlDeleteUserRecipe);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
   addRecipeView.addHandlerUpload(controlAddRecipe);

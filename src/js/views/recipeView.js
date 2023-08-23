@@ -30,6 +30,29 @@ class RecipeView extends View {
     });
   }
 
+  addHandlerDeleteUserRecipe(handler) {
+    this._parentElement.addEventListener('click', function (e) {
+      const btn = e.target.closest('.btn--delete');
+      if (!btn) return;
+      handler();
+    });
+  }
+
+  renderStartingView() {
+    const markup = `
+    <div class="message">
+      <div>
+        <svg>
+          <use href="${icons}#icon-smile"></use>
+        </svg>
+      </div>
+      <p>Start by searching for a recipe or an ingredient. Have fun!</p>
+    </div>
+    `;
+    this._parentElement.innerHTML = '';
+    this._parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
+
   _generateMarkup() {
     return `
     <figure class="recipe__fig">
@@ -83,13 +106,22 @@ class RecipeView extends View {
           <use href="${icons}#icon-user"></use>
         </svg>
       </div>
-      <button class="btn--round btn--bookmark">
-        <svg class="">
-          <use href="${icons}#icon-bookmark${
+      <div class="recipe__info-buttons">
+        <button class="btn--round btn--delete ${
+          this._data.key ? '' : 'hidden'
+        }">
+          <svg class="">
+            <use href="${icons}#icon-delete"></use>
+          </svg>
+        </button>
+        <button class="btn--round btn--bookmark">
+          <svg class="">
+            <use href="${icons}#icon-bookmark${
       this._data.bookmarked ? '-fill' : ''
     }"></use>
-        </svg>
-      </button>
+          </svg>
+        </button>
+      </div>
     </div>
 
     <div class="recipe__ingredients">

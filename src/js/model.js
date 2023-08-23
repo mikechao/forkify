@@ -1,6 +1,6 @@
 import { async } from 'regenerator-runtime';
 import { API_URL, RES_PER_PAGE, KEY } from './config';
-import { AJAX } from './helpers';
+import { AJAX, DELETE_AJAX } from './helpers';
 
 export const state = {
   recipe: {},
@@ -42,6 +42,26 @@ export const loadRecipe = async function (id) {
     console.error(`${err} 💥💥💥💥`);
     throw err;
   }
+};
+
+export const deleteUserRecipe = async function () {
+  try {
+    const id = state.recipe.id;
+    await DELETE_AJAX(`${API_URL}${id}?key=${KEY}`);
+    deleteSearchResult(id);
+    deleteBookmark(id);
+    persistBookmarks();
+    state.recipe = {};
+  } catch (err) {
+    console.error(`${err} 💥💥💥💥`);
+    throw err;
+  }
+};
+
+const deleteSearchResult = function (id) {
+  const index = state.search.results.findIndex(el => el.id === id);
+  if (index < 0) return;
+  state.search.results.splice(index, 1);
 };
 
 export const loadSearchResults = async function (query) {
