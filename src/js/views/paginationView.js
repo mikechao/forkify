@@ -6,12 +6,54 @@ class PaginationView extends View {
 
   addHandlerClick(handler) {
     this._parentElement.addEventListener('click', function (e) {
-      const btn = e.target.closest('.btn--inline');
+      const btn = e.target.closest('.btn--pagination');
       if (!btn) return;
       const goToPage = +btn.dataset.goto;
 
       handler(goToPage);
     });
+  }
+
+  _generateNextButton(curPage, hide = false) {
+    return `
+    <button data-goto="${curPage + 1}" class="btn--inline btn--pagination ${
+      hide ? 'hidden' : ''
+    }">
+        <span>Page ${curPage + 1}</span>
+        <svg class="search__icon">
+            <use href="${icons}#icon-arrow-right"></use>
+        </svg>
+    </button>
+  `;
+  }
+
+  _generateCurrentPage(curPage, numPages) {
+    return `
+    <div class="btn--inline">
+        <span>${curPage} of ${numPages}</span>
+    </div>
+    `;
+  }
+
+  _generatePrevButton(curPage, hide = false) {
+    return `
+    <button data-goto="${curPage - 1}" class="btn--inline btn--pagination ${
+      hide ? 'hidden' : ''
+    }">
+        <svg class="search__icon">
+          <use href="${icons}#icon-arrow-left"></use>
+        </svg>
+        <span>Page ${curPage - 1}</span>
+    </button>
+  `;
+  }
+
+  _generateNavMarkup(curPage, numPages, hidePrev = false, hideNext = false) {
+    return (
+      this._generatePrevButton(curPage, hidePrev) +
+      this._generateCurrentPage(curPage, numPages) +
+      this._generateNextButton(curPage, hideNext)
+    );
   }
 
   _generateMarkup() {
@@ -21,50 +63,15 @@ class PaginationView extends View {
     );
     // Page 1, and there are other pages
     if (curPage === 1 && numPages > 1) {
-      return `
-        <button data-goto="${
-          curPage + 1
-        }" class="btn--inline pagination__btn--next">
-            <span>Page ${curPage + 1}</span>
-            <svg class="search__icon">
-                <use href="${icons}#icon-arrow-right"></use>
-            </svg>
-        </button>
-      `;
+      return this._generateNavMarkup(curPage, numPages, true);
     }
     // Last Page
     if (curPage === numPages && numPages > 1) {
-      return `
-        <button data-goto="${
-          curPage - 1
-        }" class="btn--inline pagination__btn--prev">
-            <svg class="search__icon">
-              <use href="${icons}#icon-arrow-left"></use>
-            </svg>
-            <span>Page ${curPage - 1}</span>
-        </button>
-      `;
+      return this._generateNavMarkup(curPage, numPages, false, true);
     }
     // Other page
     if (this._data.page < numPages) {
-      return `
-        <button data-goto="${
-          curPage - 1
-        }" class="btn--inline pagination__btn--prev">
-            <svg class="search__icon">
-                <use href="${icons}#icon-arrow-left"></use>
-            </svg>
-            <span>Page ${curPage - 1}</span>
-        </button>
-        <button data-goto="${
-          curPage + 1
-        }" class="btn--inline pagination__btn--next">
-            <span>Page ${curPage + 1}</span>
-            <svg class="search__icon">
-                <use href="${icons}#icon-arrow-right"></use>
-            </svg>
-        </button>
-      `;
+      return this._generateNavMarkup(curPage, numPages);
     }
     // Page 1, and there are NO other pages
     return '';
