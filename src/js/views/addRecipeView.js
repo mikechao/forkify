@@ -8,6 +8,8 @@ class AddRecipeView extends View {
   _overlay = document.querySelector('.overlay');
   _btnOpen = document.querySelector('.nav__btn--add-recipe');
   _btnClose = document.querySelector('.btn--close-modal');
+  _messageRendered = false;
+  _htmlForm = this._parentElement.innerHTML;
 
   constructor() {
     super();
@@ -16,6 +18,10 @@ class AddRecipeView extends View {
   }
 
   toggleWindow() {
+    if (this._messageRendered) {
+      this._parentElement.innerHTML = '';
+      this._parentElement.innerHTML = this._htmlForm;
+    }
     this._overlay.classList.toggle('hidden');
     this._window.classList.toggle('hidden');
   }
@@ -37,6 +43,16 @@ class AddRecipeView extends View {
       const data = Object.fromEntries(dataArr);
       handler(data);
     });
+  }
+
+  renderMessage(message = this._message) {
+    super.renderMessage(message);
+    this._messageRendered = true;
+  }
+
+  renderError(message = this._errorMessage) {
+    super.renderError(message);
+    this._messageRendered = true;
   }
 
   _generateMarkup() {}
