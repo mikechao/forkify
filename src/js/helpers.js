@@ -9,6 +9,24 @@ const timeout = function (s) {
   });
 };
 
+export const AJAX_SPOON_WIDGET = async function (url) {
+  try {
+    const fetchPro = fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'text/html',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+    const res = await Promise.race([fetchPro, timeout(TIMEOUT_SEC)]);
+    const data = await res.text();
+    if (!res.ok) throw new Error(`Something went wrong ${res.status}`);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+};
+
 export const AJAX = async function (url, uploadData = undefined) {
   try {
     const fetchPro = uploadData

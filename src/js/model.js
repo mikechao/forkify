@@ -1,6 +1,12 @@
 import { async } from 'regenerator-runtime';
-import { API_URL, RES_PER_PAGE, KEY } from './config';
-import { AJAX, DELETE_AJAX } from './helpers';
+import {
+  API_URL,
+  RES_PER_PAGE,
+  KEY,
+  SPOON_API_URL,
+  SPOON_API_KEY,
+} from './config';
+import { AJAX, DELETE_AJAX, AJAX_SPOON_WIDGET } from './helpers';
 
 export const state = {
   recipe: {},
@@ -28,6 +34,26 @@ const createRecipeObject = function (data) {
     ingredients: recipe.ingredients,
     ...(recipe.key && { key: recipe.key }),
   };
+};
+
+export const getNutritionWidget = async function (recipe) {
+  try {
+    const ings = recipe.ingredients
+      .map(
+        ing =>
+          `${ing.quantity} ${ing.unit === '' ? '' : ing.unit}  ${
+            ing.description
+          }`
+      )
+      .join('\n');
+    const data = await AJAX_SPOON_WIDGET(
+      `${SPOON_API_URL}?apiKey=${SPOON_API_KEY}&showBacklink=true&defaultCss=true&servings=${recipe.servings}&ingredientList=${ings}`
+    );
+    return data;
+  } catch (err) {
+    console.error(`${err} 💥💥💥`);
+    throw err;
+  }
 };
 
 export const loadRecipe = async function (id) {

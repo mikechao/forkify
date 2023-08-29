@@ -151,6 +151,10 @@ class RecipeView extends View {
         </svg>
       </a>
     </div>
+
+    <div class="recipe__nutrition">
+      <h2 class="heading--2">Nutrition Information</h2>
+    </div>
     `;
   }
 
@@ -169,6 +173,56 @@ class RecipeView extends View {
     </div>
     </li>
     `;
+  }
+
+  widgetScriptFinished(widget, content) {
+    const iframeDocument = widget.contentDocument;
+    iframeDocument.open();
+    iframeDocument.write(content);
+    iframeDocument.close();
+
+    const nutritionWidgetScript = document.createElement('script');
+    nutritionWidgetScript.setAttribute('type', 'text/javascript');
+    nutritionWidgetScript.setAttribute(
+      'src',
+      'https://spoonacular.com/application/frontend/js/nutritionWidget.min.js?c=1'
+    );
+    widget.contentDocument.body.appendChild(nutritionWidgetScript);
+  }
+
+  widgetLoaded(widget, content) {
+    if (widget.contentWindow.jQuery && widget.contentWindow.CanvasJS) {
+      this.widgetScriptFinished(widget, content);
+    } else {
+      const that = this;
+      setTimeout(function () {
+        that.widgetLoaded(widget, content);
+      }, 50);
+    }
+  }
+
+  renderNutritionWidget(content) {
+    const iFrame = document.createElement('iframe');
+    iFrame.id = 'nutritionWidget';
+    iFrame.classList.add('recipe__widget');
+    iFrame.onload = () => this.widgetLoaded(iFrame, content);
+    document.querySelector('.recipe__nutrition').appendChild(iFrame);
+
+    const jQueryScript = document.createElement('script');
+    jQueryScript.setAttribute('type', 'text/javascript');
+    jQueryScript.setAttribute(
+      'src',
+      'https://code.jquery.com/jquery-1.9.1.min.js'
+    );
+    iFrame.contentDocument.head.appendChild(jQueryScript);
+
+    const canvasScript = document.createElement('script');
+    canvasScript.setAttribute('type', 'text/javascript');
+    canvasScript.setAttribute(
+      'src',
+      'https://spoonacular.com/application/frontend/js/jquery.canvasjs.min'
+    );
+    iFrame.contentDocument.head.appendChild(canvasScript);
   }
 }
 

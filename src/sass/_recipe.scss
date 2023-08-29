@@ -176,4 +176,23 @@
   &__publisher {
     font-weight: 700;
   }
+
+  ///////////
+  // Nutrition
+  &__nutrition {
+    background-color: darken($color-grey-light-2, 2%);
+
+    padding: 5rem 10rem;
+    padding-bottom: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__widget {
+    width: 100%;
+    height: 800px;
+    border: none;
+    margin-top: 20px;
+  }
 }

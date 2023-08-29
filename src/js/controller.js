@@ -23,9 +23,10 @@ const controlRecipes = async function () {
     bookmarksView.update(model.state.bookmarks);
     // 1 loading
     await model.loadRecipe(id);
-
+    const widget = await model.getNutritionWidget(model.state.recipe);
     // 2 Rendering recipe
     recipeView.render(model.state.recipe);
+    recipeView.renderNutritionWidget(widget);
   } catch (err) {
     recipeView.renderError();
     console.error(err);
