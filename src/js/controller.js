@@ -115,9 +115,11 @@ const controlAddRecipe = async function (newRecipe) {
     addRecipeView.renderSpinner();
 
     await model.uploadRecipe(newRecipe);
+    const widget = await model.getNutritionWidget(model.state.recipe);
 
     // render recipe
     recipeView.render(model.state.recipe);
+    recipeView.renderNutritionWidget(widget);
 
     // Success message
     addRecipeView.renderMessage();
