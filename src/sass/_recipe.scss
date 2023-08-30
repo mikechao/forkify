@@ -33,6 +33,13 @@
     object-fit: cover;
   }
 
+  &__img_error {
+    width: 100%;
+    display: block;
+    height: 100%;
+    object-fit: contain;
+  }
+
   &__title {
     position: absolute;
     bottom: 0;
