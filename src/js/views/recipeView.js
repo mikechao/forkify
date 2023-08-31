@@ -39,19 +39,6 @@ class RecipeView extends View {
     });
   }
 
-  render(data, render = true) {
-    super.render(data, render);
-    const img = document.querySelector('.recipe__img');
-    img.onerror = this.onImageError.bind(this, img);
-  }
-
-  onImageError(img) {
-    img.src = `${noImage}`;
-    img.onerror = null;
-    img.classList.remove('recipe__img');
-    img.classList.add('recipe__img_error');
-  }
-
   renderStartingView() {
     const markup = `
     <div class="message">
@@ -72,7 +59,7 @@ class RecipeView extends View {
     <figure class="recipe__fig">
       <img src="${this._data.image}" alt="${
       this._data.title
-    }" class="recipe__img"/>
+    }" class="recipe__img" onerror="this.onerror=null;this.src='${noImage}';this.className='recipe__img_error'"/>
       <h1 class="recipe__title">
         <span>${this._data.title}</span>
       </h1>
