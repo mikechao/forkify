@@ -1,4 +1,6 @@
 import View from './View';
+import tippy from 'tippy.js';
+import 'tippy.js/dist/tippy.css';
 
 class AddRecipeView extends View {
   _parentElement = document.querySelector('.upload');
@@ -40,13 +42,38 @@ class AddRecipeView extends View {
   }
 
   addHandlerUpload(handler) {
+    const that = this;
     this._parentElement.addEventListener('submit', function (e) {
       e.preventDefault();
-
       const dataArr = [...new FormData(this)];
+      if (!that.isValidIngredients(dataArr)) return;
       const data = Object.fromEntries(dataArr);
       handler(data);
     });
+  }
+
+  isValidIngredients(dataArr) {
+    let noErrors = true;
+    dataArr
+      .filter(entry => entry[0].startsWith('ingredient') && entry[1] !== '')
+      .map(ing => {
+        const ingArr = ing[1].split(',').map(el => el.trim());
+        if (ingArr.length !== 3) {
+          const input = document.querySelector(`input[name="${ing[0]}"]`);
+          input.style.borderColor = 'red';
+          const instance = tippy(input, {
+            content: `Please use the format: 'Quantity,Unit,Description'`,
+            placement: 'bottom',
+          });
+          input.addEventListener('focus', function () {
+            input.style.borderColor = '';
+            instance.destroy();
+          });
+          noErrors = false;
+        }
+      });
+
+    return noErrors;
   }
 
   renderMessage(message = this._message) {
