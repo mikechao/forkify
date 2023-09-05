@@ -1,7 +1,7 @@
 import View from './View';
 import icons from 'url:../../img/icons.svg';
 import fracty from 'fracty';
-import noImage from 'url:../../img/no-image.jpg';
+import noImage from 'url:../../img/no-image.png';
 
 class RecipeView extends View {
   _parentElement = document.querySelector('.recipe');
