@@ -6,7 +6,8 @@
   width: 100rem;
   background-color: white;
   border-radius: 9px;
-
+  max-height: 100%;
+  overflow: auto;
   padding: 5rem 6rem;
   box-shadow: 0 4rem 6rem rgba(0, 0, 0, 0.25);
   z-index: 1000;
@@ -22,6 +23,20 @@
     cursor: pointer;
     border: none;
     background: none;
+  }
+
+  .btn--add-ing {
+    font-family: inherit;
+    position: absolute;
+    top: 5rem;
+    right: 22.5rem;
+  }
+
+  .btn--remove-ing {
+    font-family: inherit;
+    position: absolute;
+    top: 5rem;
+    right: 12.5rem;
   }
 }
 
