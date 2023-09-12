@@ -1,6 +1,7 @@
 import { async } from 'regenerator-runtime';
 import { RES_PER_PAGE, SPOON_API_URL, SPOON_API_KEY } from './config';
 import { AJAX_SPOON_WIDGET } from './helpers';
+import * as netlifyFunctions from './netlifyFunctions.js';
 
 export const state = {
   recipe: {},
@@ -52,12 +53,7 @@ export const getNutritionWidget = async function (recipe) {
 
 export const loadRecipe = async function (id) {
   try {
-    const apiURL = `/.netlify/functions/getRecipe?id=${id}`;
-    const res = await fetch(apiURL, {
-      method: 'GET',
-      headers: { accept: 'application/json' },
-    });
-    const data = await res.json();
+    const data = await netlifyFunctions.loadRecipe(id);
     state.recipe = createRecipeObject(data);
 
     if (state.bookmarks.some(bookmark => bookmark.id === id))
@@ -72,10 +68,7 @@ export const loadRecipe = async function (id) {
 export const deleteUserRecipe = async function () {
   try {
     const id = state.recipe.id;
-    const apiURL = `/.netlify/functions/deleteRecipe?id=${id}`;
-    await fetch(apiURL, {
-      method: 'DELETE',
-    });
+    await netlifyFunctions.deleteRecipe(id);
     deleteSearchResult(id);
     deleteBookmark(id);
     persistBookmarks();
@@ -95,13 +88,7 @@ const deleteSearchResult = function (id) {
 export const loadSearchResults = async function (query) {
   try {
     state.search.query = query;
-    const apiURL = `/.netlify/functions/searchRecipes?query=${query}`;
-    const res = await fetch(apiURL, {
-      method: 'GET',
-      headers: { accept: 'application/json' },
-    });
-
-    const data = await res.json();
+    const data = await netlifyFunctions.searchRecipes(query);
 
     state.search.results = data.data.recipes.map(rec => {
       return {
@@ -189,12 +176,7 @@ export const uploadRecipe = async function (newRecipe) {
       ingredients,
     };
 
-    const apiURL = `/.netlify/functions/uploadRecipe`;
-    const res = await fetch(apiURL, {
-      method: 'POST',
-      body: JSON.stringify(recipe),
-    });
-    const data = await res.json();
+    const data = await netlifyFunctions.uploadRecipe(recipe);
     state.recipe = createRecipeObject(data);
     addBookmark(state.recipe);
   } catch (err) {
