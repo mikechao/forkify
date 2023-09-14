@@ -2,52 +2,24 @@ import View from './View';
 import icons from 'url:../../img/icons.svg';
 import fracty from 'fracty';
 import noImage from 'url:../../img/no-image.png';
+import deleteModalView from './deleteModalView';
 
 class RecipeView extends View {
   _parentElement = document.querySelector('.recipe');
   _errorMessage = 'We could not find that recipe. Please try another one!';
   _message;
-  _overlay = document.querySelector('.overlay');
-  _delModal = document.querySelector('.del-modal');
-  _btnDelModalClose = document.querySelector('.btn--close-del-modal');
-  _btnDelModalCancel = document.querySelector('.del-modal__cancel-btn');
-  _btnDelModalDelete = document.querySelector('.del-modal__delete-btn');
 
   constructor() {
     super();
-    this._addHandlerHideDeleteModal();
     this._addHandlerShowDeleteModal();
   }
 
   _addHandlerShowDeleteModal() {
-    const that = this;
     this._parentElement.addEventListener('click', function (e) {
       const btn = e.target.closest('.btn--delete');
       if (!btn) return;
-      that.showDeleteModal();
+      deleteModalView.show();
     });
-  }
-
-  _addHandlerHideDeleteModal() {
-    this._overlay.addEventListener('click', this.closeDeleteModal.bind(this));
-    this._btnDelModalClose.addEventListener(
-      'click',
-      this.closeDeleteModal.bind(this)
-    );
-    this._btnDelModalCancel.addEventListener(
-      'click',
-      this.closeDeleteModal.bind(this)
-    );
-  }
-
-  closeDeleteModal() {
-    this._overlay.classList.add('hidden');
-    this._delModal.classList.add('hidden');
-  }
-
-  showDeleteModal() {
-    this._overlay.classList.remove('hidden');
-    this._delModal.classList.remove('hidden');
   }
 
   addHandlerRender(handler) {
@@ -74,11 +46,7 @@ class RecipeView extends View {
   }
 
   addHandlerDeleteUserRecipe(handler) {
-    const that = this;
-    this._btnDelModalDelete.addEventListener('click', function () {
-      handler();
-      that.closeDeleteModal();
-    });
+    deleteModalView.addHandlerDeleteUserRecipe(handler);
   }
 
   renderStartingView() {

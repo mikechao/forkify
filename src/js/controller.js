@@ -95,13 +95,21 @@ const controlDeleteUserRecipe = async function () {
     // remove the hash from the url
     window.history.replaceState('', document.title, window.location.pathname);
 
-    if (model.state.search.results.length === 0) return;
+    const returnVal = {
+      status: true,
+      message: '',
+    };
+    if (model.state.search.results.length === 0) return returnVal;
     resultsView.render(model.getSearchResultsPage(1));
     paginationView.render(model.state.search);
 
-    // remove the hash from the url
+    return returnVal;
   } catch (err) {
     console.error(err);
+    return {
+      status: false,
+      message: err.message,
+    };
   }
 };
 
