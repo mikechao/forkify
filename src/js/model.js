@@ -36,9 +36,9 @@ export const getNutritionWidget = async function (recipe) {
     const ings = recipe.ingredients
       .map(
         ing =>
-          `${ing.quantity} ${ing.unit === '' ? '' : ing.unit}  ${
-            ing.description
-          }`
+          `${ing.quantity === null ? '' : ing.quantity} ${
+            ing.unit === '' ? '' : ing.unit
+          }  ${ing.description}`
       )
       .join('\n');
     const data = await AJAX_SPOON_WIDGET(
