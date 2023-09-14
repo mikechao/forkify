@@ -7,7 +7,7 @@ class RecipeView extends View {
   _parentElement = document.querySelector('.recipe');
   _errorMessage = 'We could not find that recipe. Please try another one!';
   _message;
-  _overlay = document.querySelector('.del-overlay');
+  _overlay = document.querySelector('.overlay');
   _delModal = document.querySelector('.del-modal');
   _btnDelModalClose = document.querySelector('.btn--close-del-modal');
   _btnDelModalCancel = document.querySelector('.del-modal__cancel-btn');
