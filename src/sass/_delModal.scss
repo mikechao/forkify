@@ -4,7 +4,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100rem;
+  width: 70rem;
   background-color: white;
   border-radius: 9px;
   padding: 5rem 6rem;
@@ -24,11 +24,34 @@
     background: none;
   }
 
+  &__content {
+    display: grid;
+    grid-template-areas:
+      'header'
+      'content'
+      'footer';
+    grid-template-columns: auto;
+    grid-template-rows: 2rem auto 4rem;
+    gap: 2rem;
+  }
+
   &__heading {
     font-size: 2.25rem;
     font-weight: 700;
     text-transform: uppercase;
     margin-bottom: 1rem;
+    grid-row: header;
+    grid-column: header;
+  }
+
+  &__preview {
+    grid-row: content;
+    grid-column: content;
+  }
+
+  &__buttons {
+    grid-row: footer;
+    grid-column: footer;
   }
 
   &__cancel-btn {

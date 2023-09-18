@@ -15,10 +15,11 @@ class RecipeView extends View {
   }
 
   _addHandlerShowDeleteModal() {
+    const that = this;
     this._parentElement.addEventListener('click', function (e) {
       const btn = e.target.closest('.btn--delete');
       if (!btn) return;
-      deleteModalView.show();
+      deleteModalView.show(that._data);
     });
   }
 

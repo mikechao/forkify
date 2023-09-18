@@ -1,8 +1,9 @@
 import View from './View';
 import { MODEL_CLOSE_SEC } from './../config.js';
+import previewView from './previewView';
 
 class DeleteModalView extends View {
-  _parentElement = document.querySelector('.del-modal-content');
+  _parentElement = document.querySelector('.del-modal__content');
   _window = document.querySelector('.del-modal');
   _overlay = document.querySelector('.overlay');
   _btnClose = document.querySelector('.btn--close-del-modal');
@@ -11,6 +12,7 @@ class DeleteModalView extends View {
   _message = 'Recipe was successfully deleted';
   _delModalContent = this._parentElement.querySelectorAll('.delContent');
   _messageRender = false;
+  _previewDiv = document.querySelector('.del-modal__preview');
 
   constructor() {
     super();
@@ -39,7 +41,7 @@ class DeleteModalView extends View {
     });
   }
 
-  show() {
+  show(recipe) {
     if (this._messageRender) {
       this.removeAllChild();
       this._delModalContent.forEach(child =>
@@ -47,6 +49,7 @@ class DeleteModalView extends View {
       );
       this._messageRender = false;
     }
+    this._previewDiv.innerHTML = previewView.render(recipe, false);
     this._overlay.classList.remove('hidden');
     this._window.classList.remove('hidden');
   }
@@ -54,6 +57,7 @@ class DeleteModalView extends View {
   hide() {
     this._overlay.classList.add('hidden');
     this._window.classList.add('hidden');
+    this._previewDiv.innerHTML = '';
   }
 
   _generateMarkup() {}
