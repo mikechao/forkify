@@ -48,6 +48,15 @@ export default class View {
     });
   }
 
+  /**
+   * Removes all the child nodes of _parentElement
+   */
+  removeAllChild() {
+    while (this._parentElement.firstChild) {
+      this._parentElement.removeChild(this._parentElement.lastChild);
+    }
+  }
+
   _clear() {
     this._parentElement.innerHTML = '';
   }

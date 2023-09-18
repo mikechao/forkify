@@ -39,15 +39,9 @@ class DeleteModalView extends View {
     });
   }
 
-  #removeAllChild() {
-    while (this._parentElement.firstChild) {
-      this._parentElement.removeChild(this._parentElement.lastChild);
-    }
-  }
-
   show() {
     if (this._messageRender) {
-      this.#removeAllChild();
+      this.removeAllChild();
       this._delModalContent.forEach(child =>
         this._parentElement.appendChild(child)
       );

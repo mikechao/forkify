@@ -15,6 +15,7 @@ class AddRecipeView extends View {
   _btnRemoveIng = document.querySelector('.btn--remove-ing');
   _ingredientsColumn = document.querySelector('.ing__column');
   _dataColumn = document.querySelector('.data__column');
+  _btnUpload = document.querySelector('.upload__btn');
 
   constructor() {
     super();
@@ -25,8 +26,27 @@ class AddRecipeView extends View {
 
   showWindow() {
     if (this._messageRendered) {
-      this._parentElement.innerHTML = '';
-      this._parentElement.innerHTML = this._htmlForm;
+      this.removeAllChild();
+      // add back the elements since they were removed rendering the message, keeping the event listeners and reset the values of the form
+      this._parentElement.appendChild(this._btnAddIng);
+      this._parentElement.appendChild(this._btnRemoveIng);
+      this._parentElement.appendChild(this._dataColumn);
+      // restore the default view of having 2 visible labels and inputs for ingredients
+      const labels = this._ingredientsColumn.querySelectorAll('label');
+      labels.forEach((label, index) => {
+        if (index > 1) {
+          label.classList.add('hidden');
+        }
+      });
+      const inputs = this._ingredientsColumn.querySelectorAll('input');
+      inputs.forEach((input, index) => {
+        if (index > 1) {
+          input.classList.add('hidden');
+        }
+      });
+      this._parentElement.appendChild(this._ingredientsColumn);
+      this._parentElement.appendChild(this._btnUpload);
+      this._parentElement.reset();
     }
     this._overlay.classList.remove('hidden');
     this._window.classList.remove('hidden');
