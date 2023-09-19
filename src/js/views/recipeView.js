@@ -3,6 +3,9 @@ import icons from 'url:../../img/icons.svg';
 import fracty from 'fracty';
 import noImage from 'url:../../img/no-image.png';
 import deleteModalView from './deleteModalView';
+import tippy from 'tippy.js';
+import 'tippy.js/dist/tippy.css';
+import { TOOLTIP_DELAY_MS } from '../config.js';
 
 class RecipeView extends View {
   _parentElement = document.querySelector('.recipe');
@@ -96,14 +99,14 @@ class RecipeView extends View {
         <span class="recipe__info-text">servings</span>
 
         <div class="recipe__info-buttons">
-          <button class="btn--tiny btn--update-servings" data-update-to="${
+          <button class="btn--tiny btn--update-servings btn--update-servings-minus" data-update-to="${
             this._data.servings - 1
           }">
             <svg>
               <use href="${icons}#icon-minus-circle"></use>
             </svg>
           </button>
-          <button class="btn--tiny btn--update-servings" data-update-to="${
+          <button class="btn--tiny btn--update-servings btn--update-servings-plus" data-update-to="${
             this._data.servings + 1
           }">
             <svg>
@@ -114,7 +117,7 @@ class RecipeView extends View {
       </div>
 
       <div class="recipe__user-generated ${this._data.key ? '' : 'hidden'}">
-        <svg>
+        <svg class="icon-user">
           <use href="${icons}#icon-user"></use>
         </svg>
       </div>
@@ -185,6 +188,62 @@ class RecipeView extends View {
     </div>
     </li>
     `;
+  }
+
+  render(data, render = true) {
+    super.render(data, render);
+    this.#addButtonToolTips();
+  }
+
+  update(data) {
+    super.update(data);
+    this.#updateButtonToolTips();
+  }
+
+  #addButtonToolTips() {
+    tippy('.btn--delete', {
+      content: `Delete this recipe`,
+      placement: 'top',
+      theme: 'forkify',
+      delay: [TOOLTIP_DELAY_MS, 0],
+    });
+    tippy('.btn--bookmark', {
+      content: `${
+        this._data.bookmarked ? 'Bookmarked!' : 'Bookmark this recipe'
+      }`,
+      placement: 'top',
+      theme: 'forkify',
+      delay: [TOOLTIP_DELAY_MS, 0],
+    });
+    tippy('.btn--update-servings-minus', {
+      content: `Decreases servings<br>Will decrease ingredients used`,
+      placement: 'top',
+      theme: 'forkify',
+      allowHTML: true,
+      delay: [TOOLTIP_DELAY_MS, 0],
+    });
+    tippy('.btn--update-servings-plus', {
+      content: `Increases servings<br>Will increase ingredients used`,
+      placement: 'top',
+      theme: 'forkify',
+      allowHTML: true,
+      delay: [TOOLTIP_DELAY_MS, 0],
+    });
+    tippy('.icon-user', {
+      content: `User uploaded recipe`,
+      placement: 'top',
+      theme: 'forkify',
+      allowHTML: true,
+      delay: [TOOLTIP_DELAY_MS, 0],
+    });
+  }
+
+  #updateButtonToolTips() {
+    const btnBookmark = document.querySelector('.btn--bookmark');
+    const content = this._data.bookmarked
+      ? 'Bookmarked!'
+      : 'Bookmark this recipe';
+    btnBookmark._tippy.setContent(content);
   }
 
   widgetScriptFinished(widget, content) {

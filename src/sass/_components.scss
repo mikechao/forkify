@@ -90,6 +90,18 @@
   }
 }
 
+.tippy-box[data-theme~='forkify'] {
+  background-color: $color-primary;
+  background-image: $gradient;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.tippy-box[data-theme~='forkify'][data-placement^='top']
+  > .tippy-arrow::before {
+  border-top-color: $color-primary;
+}
+
 .btn--round {
   background-image: $gradient;
   border-radius: 50%;
