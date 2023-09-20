@@ -10,12 +10,12 @@ class AddRecipeView extends View {
   _btnOpen = document.querySelector('.nav__btn--add-recipe');
   _btnClose = document.querySelector('.btn--close-modal');
   _messageRendered = false;
-  _htmlForm = this._parentElement.innerHTML;
   _btnAddIng = document.querySelector('.btn--add-ing');
   _btnRemoveIng = document.querySelector('.btn--remove-ing');
   _ingredientsColumn = document.querySelector('.ing__column');
   _dataColumn = document.querySelector('.data__column');
   _btnUpload = document.querySelector('.upload__btn');
+  _editMode = false;
 
   constructor() {
     super();
@@ -48,8 +48,38 @@ class AddRecipeView extends View {
       this._parentElement.appendChild(this._btnUpload);
       this._parentElement.reset();
     }
+    if (this._editMode) this._parentElement.reset();
+    this._editMode = false;
     this._overlay.classList.remove('hidden');
     this._window.classList.remove('hidden');
+  }
+
+  showEditWindow(recipe) {
+    this.showWindow();
+    this._editMode = true;
+    // set the input fields values for the data column since the name attriubute on the input field matches the key in the recipe
+    const keysToIgnore = ['ingredients', 'key', 'bookmarked', 'id'];
+    Object.keys(recipe)
+      .filter(key => !keysToIgnore.includes(key))
+      .forEach(key => {
+        this._dataColumn.querySelector(`input[name=${key}]`).value =
+          recipe[key];
+      });
+
+    recipe.ingredients.forEach((ing, index) => {
+      const input = this._ingredientsColumn.querySelector(
+        `input[name=ingredient-${index + 1}]`
+      );
+      const val = `${ing.quantity === null ? '' : ing.quantity},${
+        ing.unit === null ? '' : ing.unit
+      },${ing.description === null ? '' : ing.description}`;
+      input.value = val;
+      input.classList.remove('hidden');
+      const label = this._ingredientsColumn.querySelector(
+        `label[for=ingredient-${index + 1}]`
+      );
+      label.classList.remove('hidden');
+    });
   }
 
   closeWindow() {
@@ -96,6 +126,7 @@ class AddRecipeView extends View {
     const labelTags = this._ingredientsColumn.querySelectorAll('label');
     const ingLabel = document.createElement('label');
     ingLabel.textContent = `Ingredient ${labelTags.length + 1}`;
+    ingLabel.htmlFor = `ingredient-${labelTags.length + 1}`;
     const ingInput = document.createElement('input');
     ingInput.setAttribute('type', 'text');
     ingInput.setAttribute('name', `ingredient-${labelTags.length + 1}`);
@@ -108,6 +139,7 @@ class AddRecipeView extends View {
   _toggleHidden(label) {
     label.classList.toggle('hidden');
     label.nextElementSibling.classList.toggle('hidden');
+    label.nextElementSibling.value = '';
   }
 
   _removeIngredient() {
@@ -126,6 +158,7 @@ class AddRecipeView extends View {
     const labelTagsNL = this._ingredientsColumn.querySelectorAll('label');
     const lastIngLabel = labelTagsNL[labelTagsNL.length - 1];
     const lastIngInput = lastIngLabel.nextElementSibling;
+    lastIngInput.value = '';
     this._ingredientsColumn.removeChild(lastIngInput);
     this._ingredientsColumn.removeChild(lastIngLabel);
 
@@ -136,14 +169,15 @@ class AddRecipeView extends View {
     this._dataColumn.removeChild(lastDataLabel);
   }
 
-  addHandlerUpload(handler) {
+  addHandlerUpload(addHandler, editHandler) {
     const that = this;
     this._parentElement.addEventListener('submit', function (e) {
       e.preventDefault();
       const dataArr = [...new FormData(this)];
       if (!that.isValidIngredients(dataArr)) return;
       const data = Object.fromEntries(dataArr);
-      handler(data);
+      if (that._editMode) editHandler(data);
+      if (!that._editMode) addHandler(data);
     });
   }
 

@@ -106,6 +106,13 @@
     transform: translateY(-1px);
   }
 
+  &__delete-button,
+  &__bookmark-button,
+  &__edit-button {
+    margin-left: 1.5px;
+    margin-right: 1.5px;
+  }
+
   &__user-generated {
     background-color: darken($color-grey-light-2, 2%);
 

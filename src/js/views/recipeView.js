@@ -6,6 +6,7 @@ import deleteModalView from './deleteModalView';
 import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css';
 import { TOOLTIP_DELAY_MS } from '../config.js';
+import addRecipeView from './addRecipeView';
 
 class RecipeView extends View {
   _parentElement = document.querySelector('.recipe');
@@ -15,6 +16,7 @@ class RecipeView extends View {
   constructor() {
     super();
     this._addHandlerShowDeleteModal();
+    this._addHandlerEditRecipe();
   }
 
   _addHandlerShowDeleteModal() {
@@ -51,6 +53,15 @@ class RecipeView extends View {
 
   addHandlerDeleteUserRecipe(handler) {
     deleteModalView.addHandlerDeleteUserRecipe(handler);
+  }
+
+  _addHandlerEditRecipe() {
+    const that = this;
+    this._parentElement.addEventListener('click', function (e) {
+      const btn = e.target.closest('.btn--edit');
+      if (!btn) return;
+      addRecipeView.showEditWindow(that._data);
+    });
   }
 
   renderStartingView() {
@@ -122,14 +133,19 @@ class RecipeView extends View {
         </svg>
       </div>
       <div class="recipe__info-buttons">
-        <button class="btn--round btn--delete ${
+        <button class="btn--round btn--delete recipe__delete-button${
           this._data.key ? '' : 'hidden'
         }">
           <svg class="">
             <use href="${icons}#icon-delete"></use>
           </svg>
         </button>
-        <button class="btn--round btn--bookmark">
+        <button class="btn--round btn--edit recipe__edit-button">
+        <svg class="">
+          <use href="${icons}#icon-edit"></use>
+        </svg>
+      </button>
+        <button class="btn--round btn--bookmark recipe__bookmark-button">
           <svg class="">
             <use href="${icons}#icon-bookmark${
       this._data.bookmarked ? '-fill' : ''
@@ -203,6 +219,12 @@ class RecipeView extends View {
   #addButtonToolTips() {
     tippy('.btn--delete', {
       content: `Delete this recipe`,
+      placement: 'top',
+      theme: 'forkify',
+      delay: [TOOLTIP_DELAY_MS, 0],
+    });
+    tippy('.btn--edit', {
+      content: `Edit this recipe`,
       placement: 'top',
       theme: 'forkify',
       delay: [TOOLTIP_DELAY_MS, 0],
