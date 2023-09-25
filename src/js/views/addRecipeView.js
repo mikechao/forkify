@@ -1,6 +1,4 @@
 import View from './View';
-import tippy from 'tippy.js';
-import 'tippy.js/dist/tippy.css';
 
 class AddRecipeView extends View {
   _parentElement = document.querySelector('.upload');
@@ -16,12 +14,65 @@ class AddRecipeView extends View {
   _dataColumn = document.querySelector('.data__column');
   _btnUpload = document.querySelector('.upload__btn');
   _editMode = false;
+  _validators = {
+    required: element => element.value.length > 0,
+    isIngredient: element => {
+      if (element.value.length > 0) {
+        const ingArr = element.value.split(',').map(el => el.trim());
+        if (ingArr.length !== 3) {
+          return false;
+        }
+      }
+      return true;
+    },
+  };
 
   constructor() {
     super();
     this._addHandlerShowWindow();
     this._addHanlderHideWindow();
     this._addHandlerAddRemoveIng();
+    this._addHandlerInputOnBlur();
+  }
+
+  _addHandlerInputOnBlur() {
+    const that = this;
+    const inputs = this._parentElement.querySelectorAll('input');
+    inputs.forEach(input => {
+      input.addEventListener('blur', () => that.validateElement(input));
+    });
+  }
+
+  validateElement(element) {
+    this.resetValidation(element);
+    const rules = element.dataset.validate.split(' ');
+    rules.forEach(rule => {
+      if (this._validators[rule](element)) {
+        return;
+      } else {
+        this.markElementInvalid(element);
+      }
+    });
+  }
+
+  markElementInvalid(element) {
+    element.classList.add('invalid');
+    const spanError = document.getElementById(`${element.name}Error`);
+    spanError.style.display = 'inline';
+    spanError.classList.remove('hidden');
+    // also show previous elemtn sibling the spacer space to get the error message to line up to the input field
+    spanError.previousElementSibling.style.display = 'inline';
+    spanError.previousElementSibling.classList.remove('hidden');
+  }
+
+  resetValidation(element) {
+    element.classList.remove('invalid');
+    const spanError = document.getElementById(`${element.name}Error`);
+    spanError.style.display = 'none';
+    spanError.classList.add('hidden');
+    // hide the spacer span that was shown when markElementInvalid was called
+    spanError.previousElementSibling.style.display = 'none';
+    spanError.previousElementSibling.classList.add('hidden');
   }
 
   showWindow() {
@@ -119,8 +170,16 @@ class AddRecipeView extends View {
     dataLabel.classList.add('hidden');
     const dataInput = document.createElement('input');
     dataInput.classList.add('hidden');
+    const dataSpacerSpan = document.createElement('span');
+    dataSpacerSpan.id = 'spacer';
+    dataSpacerSpan.classList.add('hidden');
+    const dataErrorSpan = document.createElement('span');
+    dataErrorSpan.id = 'dataError';
+    dataErrorSpan.classList.add('hidden');
     this._dataColumn.appendChild(dataLabel);
     this._dataColumn.appendChild(dataInput);
+    this._dataColumn.appendChild(dataSpacerSpan);
+    this._dataColumn.appendChild(dataErrorSpan);
 
     // create and add label and input for the ingredient column side
     const labelTags = this._ingredientsColumn.querySelectorAll('label');
@@ -131,9 +190,21 @@ class AddRecipeView extends View {
     ingInput.setAttribute('type', 'text');
     ingInput.setAttribute('name', `ingredient-${labelTags.length + 1}`);
     ingInput.setAttribute('placeholder', `Format: 'Quantity,Unit,Description'`);
+    ingInput.setAttribute('data-validate', 'isIngredient');
+    ingInput.addEventListener('blur', () => this.validateElement(ingInput));
+    const spacerSpan = document.createElement('span');
+    spacerSpan.id = 'spacer';
+    spacerSpan.classList.add('hidden');
+
+    const errorSpan = document.createElement('span');
+    errorSpan.id = `ingredient-${labelTags.length + 1}Error`;
+    errorSpan.classList.add('hidden');
+    errorSpan.textContent = `Please use the Format: 'Quantity,Unit,Description'`;
 
     this._ingredientsColumn.appendChild(ingLabel);
     this._ingredientsColumn.appendChild(ingInput);
+    this._ingredientsColumn.appendChild(spacerSpan);
+    this._ingredientsColumn.appendChild(errorSpan);
   }
 
   _toggleHidden(label) {
@@ -155,18 +226,18 @@ class AddRecipeView extends View {
   }
 
   _removeLabelAndInput() {
-    const labelTagsNL = this._ingredientsColumn.querySelectorAll('label');
-    const lastIngLabel = labelTagsNL[labelTagsNL.length - 1];
-    const lastIngInput = lastIngLabel.nextElementSibling;
-    lastIngInput.value = '';
-    this._ingredientsColumn.removeChild(lastIngInput);
-    this._ingredientsColumn.removeChild(lastIngLabel);
+    // remove the last 4 nodes in the ingredients column
+    // they should be the label, input, span#spacer and span#ingredient-$Error
+    const last4IngredientNodes = [...this._ingredientsColumn.childNodes].slice(
+      -4
+    );
+    last4IngredientNodes.forEach(node =>
+      this._ingredientsColumn.removeChild(node)
+    );
 
-    const dataLabelTags = this._dataColumn.querySelectorAll('label');
-    const lastDataLabel = dataLabelTags[dataLabelTags.length - 1];
-    const lastDataInput = lastDataLabel.nextElementSibling;
-    this._dataColumn.removeChild(lastDataInput);
-    this._dataColumn.removeChild(lastDataLabel);
+    // remove the last 4 nodes in the data column they shouldbe be the label, input, span#spacer, span#dataError
+    const last4DataNodes = [...this._dataColumn.childNodes].slice(-4);
+    last4DataNodes.forEach(node => this._dataColumn.removeChild(node));
   }
 
   addHandlerUpload(addHandler, editHandler) {
@@ -174,35 +245,23 @@ class AddRecipeView extends View {
     this._parentElement.addEventListener('submit', function (e) {
       e.preventDefault();
       const dataArr = [...new FormData(this)];
-      if (!that.isValidIngredients(dataArr)) return;
+      if (!that.isFormValid()) return;
       const data = Object.fromEntries(dataArr);
       if (that._editMode) editHandler(data);
       if (!that._editMode) addHandler(data);
     });
   }
 
-  isValidIngredients(dataArr) {
-    let noErrors = true;
-    dataArr
-      .filter(entry => entry[0].startsWith('ingredient') && entry[1] !== '')
-      .map(ing => {
-        const ingArr = ing[1].split(',').map(el => el.trim());
-        if (ingArr.length !== 3) {
-          const input = document.querySelector(`input[name="${ing[0]}"]`);
-          input.style.borderColor = 'red';
-          const instance = tippy(input, {
-            content: `Please use the format: 'Quantity,Unit,Description'`,
-            placement: 'bottom',
-          });
-          input.addEventListener('focus', function () {
-            input.style.borderColor = '';
-            instance.destroy();
-          });
-          noErrors = false;
-        }
-      });
-
-    return noErrors;
+  isFormValid() {
+    const inputs = this._parentElement.querySelectorAll('input');
+    inputs.forEach(input => {
+      if (!input.dataset) return;
+      if (!input.dataset.validate) return;
+      this.validateElement(input);
+    });
+    const formIsValid =
+      this._parentElement.querySelectorAll('.invalid').length === 0;
+    return formIsValid;
   }
 
   renderMessage(message = this._message) {
