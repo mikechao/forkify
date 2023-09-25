@@ -186,7 +186,7 @@ class RecipeView extends View {
     <div class="recipe__nutrition">
       <h2 class="heading--2">Nutrition Information</h2>
       <p class="recipe__directions-text">
-      Nutrition information is for general information purposes only and is not meant to substitute professional dietary advice or treatment. The information has not been vetted by a professional.
+      Nutrition information is for general information purposes only and is not meant to substitute professional dietary advice or treatment. This information has not been vetted by a professional.
       </p>
     </div>
     `;
