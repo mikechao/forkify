@@ -36,10 +36,10 @@ class AddRecipeView extends View {
   }
 
   _addHandlerInputOnBlur() {
-    const that = this;
     const inputs = this._parentElement.querySelectorAll('input');
     inputs.forEach(input => {
-      input.addEventListener('blur', () => that.validateElement(input));
+      input.addEventListener('blur', () => this.validateElement(input));
+      input.addEventListener('focus', () => this.resetValidation(input));
     });
   }
 
@@ -192,6 +192,7 @@ class AddRecipeView extends View {
     ingInput.setAttribute('placeholder', `Format: 'Quantity,Unit,Description'`);
     ingInput.setAttribute('data-validate', 'isIngredient');
     ingInput.addEventListener('blur', () => this.validateElement(ingInput));
+    ingInput.addEventListener('input', () => this.resetValidation(ingInput));
     const spacerSpan = document.createElement('span');
     spacerSpan.id = 'spacer';
     spacerSpan.classList.add('hidden');
