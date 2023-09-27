@@ -19,7 +19,9 @@
   <body>
     <div class="container">
       <header class="header">
-        <img src="src/img/logo.png" alt="Logo" class="header__logo" />
+        <a href="/">
+          <img src="src/img/logo.png" alt="Logo" class="header__logo" />
+        </a>
         <form class="search">
           <input
             type="text"
@@ -375,7 +377,7 @@
             required
             name="ingredient-1"
             placeholder="Format: 'Quantity,Unit,Description'"
-            data-validate="isIngredient"
+            data-validate="isIngredient required"
           />
           <span id="spacer" class="hidden"></span>
           <span id="ingredient-1Error" class="hidden"
