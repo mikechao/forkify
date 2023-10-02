@@ -7,12 +7,22 @@
     "start": "parcel index.html",
     "build": "parcel build index.html --dist-dir ./dist",
     "dev": "netlify dev",
-    "debug": "netlify dev --inspect"
+    "debug": "netlify dev --inspect",
+    "test": "jest"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageReporters": [
+      "html"
+    ]
   },
   "author": "Mike Chao",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.23.0",
+    "@babel/preset-env": "^7.22.20",
     "@parcel/transformer-sass": "^2.9.3",
+    "babel-jest": "^29.7.0",
     "jest": "^29.7.0",
     "netlify-cli": "^16.3.1",
     "parcel": "^2.9.3",
