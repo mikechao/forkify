@@ -69,235 +69,122 @@ describe('Testing converting recipe from UI to model', () => {
 });
 
 describe('Testing IS_RECIPES_EQUAL', () => {
+  const recipe = {
+    title: 'Pizza pizza',
+    sourceUrl: 'http://pizza.com',
+    image: '404.jpg',
+    publisher: 'John smith',
+    cookingTime: 15,
+    servings: 2,
+    ingredients: [
+      { quantity: 1, unit: 'cup', description: 'apple' },
+      { quantity: 2, unit: 'bags', description: 'salt' },
+    ],
+  };
+
   test('Recipe should equal it self', () => {
-    const recipe = {
-      title: 'Pizza pizza',
-      sourceUrl: 'http://google.com',
-      image: '404.jpg',
-      publisher: 'John smith',
-      cookingTime: 15,
-      servings: 2,
-      ingredients: [
-        { quantity: 1, unit: 'cup', description: 'apple' },
-        { quantity: 2, unit: 'bags', description: 'salt' },
-      ],
-    };
     expect(IS_RECIPES_EQUAL(recipe, recipe)).toBe(true);
   });
 
   test('Recipe title changed', () => {
-    const recipe = {
-      title: 'Pizza pizza',
-      sourceUrl: 'http://google.com',
-      image: '404.jpg',
-      publisher: 'John smith',
-      cookingTime: 15,
-      servings: 2,
-      ingredients: [
-        { quantity: 1, unit: 'cup', description: 'apple' },
-        { quantity: 2, unit: 'bags', description: 'salt' },
-      ],
-    };
     const otherRecipe = {
       title: 'Pizza pizza 2',
-      sourceUrl: 'http://google.com',
-      image: '404.jpg',
-      publisher: 'John smith',
-      cookingTime: 15,
-      servings: 2,
-      ingredients: [
-        { quantity: 1, unit: 'cup', description: 'apple' },
-        { quantity: 2, unit: 'bags', description: 'salt' },
-      ],
+      sourceUrl: recipe.sourceUrl,
+      image: recipe.image,
+      publisher: recipe.publisher,
+      cookingTime: recipe.cookingTime,
+      servings: recipe.servings,
+      ingredients: recipe.ingredients,
     };
     expect(IS_RECIPES_EQUAL(recipe, otherRecipe)).toBe(false);
   });
 
   test('Recipe sourceUrl changed', () => {
-    const recipe = {
-      title: 'Pizza pizza',
-      sourceUrl: 'http://google.com',
-      image: '404.jpg',
-      publisher: 'John smith',
-      cookingTime: 15,
-      servings: 2,
-      ingredients: [
-        { quantity: 1, unit: 'cup', description: 'apple' },
-        { quantity: 2, unit: 'bags', description: 'salt' },
-      ],
-    };
     const otherRecipe = {
-      title: 'Pizza pizza',
-      sourceUrl: 'http://pizza.com',
-      image: '404.jpg',
-      publisher: 'John smith',
-      cookingTime: 15,
-      servings: 2,
-      ingredients: [
-        { quantity: 1, unit: 'cup', description: 'apple' },
-        { quantity: 2, unit: 'bags', description: 'salt' },
-      ],
+      title: recipe.title,
+      sourceUrl: 'http://google.com',
+      image: recipe.image,
+      publisher: recipe.publisher,
+      cookingTime: recipe.cookingTime,
+      servings: recipe.servings,
+      ingredients: recipe.ingredients,
     };
     expect(IS_RECIPES_EQUAL(recipe, otherRecipe)).toBe(false);
   });
 
   test('Recipe image changed', () => {
-    const recipe = {
-      title: 'Pizza pizza',
-      sourceUrl: 'http://pizza.com',
-      image: '404.jpg',
-      publisher: 'John smith',
-      cookingTime: 15,
-      servings: 2,
-      ingredients: [
-        { quantity: 1, unit: 'cup', description: 'apple' },
-        { quantity: 2, unit: 'bags', description: 'salt' },
-      ],
-    };
     const otherRecipe = {
-      title: 'Pizza pizza',
-      sourceUrl: 'http://pizza.com',
+      title: recipe.title,
+      sourceUrl: recipe.sourceUrl,
       image: 'pizza.jpg',
-      publisher: 'John smith',
-      cookingTime: 15,
-      servings: 2,
-      ingredients: [
-        { quantity: 1, unit: 'cup', description: 'apple' },
-        { quantity: 2, unit: 'bags', description: 'salt' },
-      ],
+      publisher: recipe.publisher,
+      cookingTime: recipe.cookingTime,
+      servings: recipe.servings,
+      ingredients: recipe.ingredients,
     };
     expect(IS_RECIPES_EQUAL(recipe, otherRecipe)).toBe(false);
   });
 
   test('Recipe publisher changed', () => {
-    const recipe = {
-      title: 'Pizza pizza',
-      sourceUrl: 'http://pizza.com',
-      image: 'pizza.jpg',
-      publisher: 'John smith',
-      cookingTime: 15,
-      servings: 2,
-      ingredients: [
-        { quantity: 1, unit: 'cup', description: 'apple' },
-        { quantity: 2, unit: 'bags', description: 'salt' },
-      ],
-    };
     const otherRecipe = {
-      title: 'Pizza pizza',
-      sourceUrl: 'http://pizza.com',
-      image: 'pizza.jpg',
-      publisher: 'John smith JR',
-      cookingTime: 15,
-      servings: 2,
-      ingredients: [
-        { quantity: 1, unit: 'cup', description: 'apple' },
-        { quantity: 2, unit: 'bags', description: 'salt' },
-      ],
+      title: recipe.title,
+      sourceUrl: recipe.sourceUrl,
+      image: recipe.image,
+      publisher: 'John Smith JR',
+      cookingTime: recipe.cookingTime,
+      servings: recipe.servings,
+      ingredients: recipe.ingredients,
     };
     expect(IS_RECIPES_EQUAL(recipe, otherRecipe)).toBe(false);
   });
 
   test('Recipe cookingTime changed', () => {
-    const recipe = {
-      title: 'Pizza pizza',
-      sourceUrl: 'http://pizza.com',
-      image: 'pizza.jpg',
-      publisher: 'John smith',
-      cookingTime: 15,
-      servings: 2,
-      ingredients: [
-        { quantity: 1, unit: 'cup', description: 'apple' },
-        { quantity: 2, unit: 'bags', description: 'salt' },
-      ],
-    };
     const otherRecipe = {
-      title: 'Pizza pizza',
-      sourceUrl: 'http://pizza.com',
-      image: 'pizza.jpg',
-      publisher: 'John smith',
+      title: recipe.title,
+      sourceUrl: recipe.sourceUrl,
+      image: recipe.image,
+      publisher: recipe.publisher,
       cookingTime: 20,
-      servings: 2,
-      ingredients: [
-        { quantity: 1, unit: 'cup', description: 'apple' },
-        { quantity: 2, unit: 'bags', description: 'salt' },
-      ],
+      servings: recipe.servings,
+      ingredients: recipe.ingredients,
     };
     expect(IS_RECIPES_EQUAL(recipe, otherRecipe)).toBe(false);
   });
 
   test('Recipe servings changed', () => {
-    const recipe = {
-      title: 'Pizza pizza',
-      sourceUrl: 'http://pizza.com',
-      image: 'pizza.jpg',
-      publisher: 'John smith',
-      cookingTime: 15,
-      servings: 2,
-      ingredients: [
-        { quantity: 1, unit: 'cup', description: 'apple' },
-        { quantity: 2, unit: 'bags', description: 'salt' },
-      ],
-    };
     const otherRecipe = {
-      title: 'Pizza pizza',
-      sourceUrl: 'http://pizza.com',
-      image: 'pizza.jpg',
-      publisher: 'John smith',
-      cookingTime: 15,
+      title: recipe.title,
+      sourceUrl: recipe.sourceUrl,
+      image: recipe.image,
+      publisher: recipe.publisher,
+      cookingTime: recipe.cookingTime,
       servings: 4,
-      ingredients: [
-        { quantity: 1, unit: 'cup', description: 'apple' },
-        { quantity: 2, unit: 'bags', description: 'salt' },
-      ],
+      ingredients: recipe.ingredients,
     };
     expect(IS_RECIPES_EQUAL(recipe, otherRecipe)).toBe(false);
   });
 
   test('Recipes with different number of ingredients', () => {
-    const recipe = {
-      title: 'Pizza pizza',
-      sourceUrl: 'http://pizza.com',
-      image: 'pizza.jpg',
-      publisher: 'John smith',
-      cookingTime: 15,
-      servings: 4,
-      ingredients: [
-        { quantity: 1, unit: 'cup', description: 'apple' },
-        { quantity: 2, unit: 'bags', description: 'salt' },
-      ],
-    };
     const otherRecipe = {
-      title: 'Pizza pizza',
-      sourceUrl: 'http://pizza.com',
-      image: 'pizza.jpg',
-      publisher: 'John smith',
-      cookingTime: 15,
-      servings: 4,
+      title: recipe.title,
+      sourceUrl: recipe.sourceUrl,
+      image: recipe.image,
+      publisher: recipe.publisher,
+      cookingTime: recipe.cookingTime,
+      servings: recipe.servings,
       ingredients: [{ quantity: 1, unit: 'cup', description: 'apple' }],
     };
     expect(IS_RECIPES_EQUAL(recipe, otherRecipe)).toBe(false);
   });
 
   test('Recipes with 1 ingredient different quantity', () => {
-    const recipe = {
-      title: 'Pizza pizza',
-      sourceUrl: 'http://pizza.com',
-      image: 'pizza.jpg',
-      publisher: 'John smith',
-      cookingTime: 15,
-      servings: 4,
-      ingredients: [
-        { quantity: 1, unit: 'cup', description: 'apple' },
-        { quantity: 2, unit: 'bags', description: 'salt' },
-      ],
-    };
     const otherRecipe = {
-      title: 'Pizza pizza',
-      sourceUrl: 'http://pizza.com',
-      image: 'pizza.jpg',
-      publisher: 'John smith',
-      cookingTime: 15,
-      servings: 4,
+      title: recipe.title,
+      sourceUrl: recipe.sourceUrl,
+      image: recipe.image,
+      publisher: recipe.publisher,
+      cookingTime: recipe.cookingTime,
+      servings: recipe.servings,
       ingredients: [
         { quantity: 2, unit: 'cup', description: 'apple' },
         { quantity: 2, unit: 'bags', description: 'salt' },
@@ -307,25 +194,13 @@ describe('Testing IS_RECIPES_EQUAL', () => {
   });
 
   test('Recipes with 1 ingredient different unit', () => {
-    const recipe = {
-      title: 'Pizza pizza',
-      sourceUrl: 'http://pizza.com',
-      image: 'pizza.jpg',
-      publisher: 'John smith',
-      cookingTime: 15,
-      servings: 4,
-      ingredients: [
-        { quantity: 1, unit: 'cup', description: 'apple' },
-        { quantity: 2, unit: 'bags', description: 'salt' },
-      ],
-    };
     const otherRecipe = {
-      title: 'Pizza pizza',
-      sourceUrl: 'http://pizza.com',
-      image: 'pizza.jpg',
-      publisher: 'John smith',
-      cookingTime: 15,
-      servings: 4,
+      title: recipe.title,
+      sourceUrl: recipe.sourceUrl,
+      image: recipe.image,
+      publisher: recipe.publisher,
+      cookingTime: recipe.cookingTime,
+      servings: recipe.servings,
       ingredients: [
         { quantity: 1, unit: 'oz', description: 'apple' },
         { quantity: 2, unit: 'bags', description: 'salt' },
@@ -335,25 +210,13 @@ describe('Testing IS_RECIPES_EQUAL', () => {
   });
 
   test('Recipes with 1 ingredient different description', () => {
-    const recipe = {
-      title: 'Pizza pizza',
-      sourceUrl: 'http://pizza.com',
-      image: 'pizza.jpg',
-      publisher: 'John smith',
-      cookingTime: 15,
-      servings: 4,
-      ingredients: [
-        { quantity: 1, unit: 'cup', description: 'apple' },
-        { quantity: 2, unit: 'bags', description: 'salt' },
-      ],
-    };
     const otherRecipe = {
-      title: 'Pizza pizza',
-      sourceUrl: 'http://pizza.com',
-      image: 'pizza.jpg',
-      publisher: 'John smith',
-      cookingTime: 15,
-      servings: 4,
+      title: recipe.title,
+      sourceUrl: recipe.sourceUrl,
+      image: recipe.image,
+      publisher: recipe.publisher,
+      cookingTime: recipe.cookingTime,
+      servings: recipe.servings,
       ingredients: [
         { quantity: 1, unit: 'cup', description: 'apple' },
         { quantity: 2, unit: 'bags', description: 'banana' },
