@@ -1,11 +1,17 @@
 import { async } from 'regenerator-runtime';
-import { loadRecipe, searchRecipes } from '../js/netlifyFunctions';
-import { beforeEach } from 'node:test';
+import {
+  loadRecipe,
+  searchRecipes,
+  uploadRecipe,
+  deleteRecipe,
+} from '../js/netlifyFunctions';
 
 jest.mock('../js/netlifyFunctions', () => ({
   __esModule: true, // this property makes it work
   loadRecipe: jest.fn(),
   searchRecipes: jest.fn(),
+  uploadRecipe: jest.fn(),
+  deleteRecipe: jest.fn(),
 }));
 
 function getBookmarkedRecipeId() {
@@ -122,6 +128,42 @@ function searchRecipesResults() {
   };
 }
 
+function uploadedRecipeResults() {
+  return {
+    status: 'success',
+    data: {
+      recipe: {
+        createdAt: '2023-10-03T21:53:46.793Z',
+        title: "James's Pizza",
+        source_url: 'http://james.com',
+        image_url: 'http://james.com',
+        publisher: 'James',
+        cooking_time: 4,
+        servings: 1,
+        ingredients: [
+          {
+            quantity: 1,
+            unit: '',
+            description: 'Cat',
+          },
+          {
+            quantity: 1,
+            unit: 'bag',
+            description: 'orange fur',
+          },
+          {
+            quantity: null,
+            unit: '',
+            description: 'nails',
+          },
+        ],
+        key: '0fe58a46-944a-41f2-b3c8-5b6458414195',
+        id: '651ddad373368200146f3dd9',
+      },
+    },
+  };
+}
+
 describe('Testing model with bookmarked recipe in localstorage', () => {
   let model;
   let localStorageMock;
@@ -217,5 +259,51 @@ describe('Testing model with empty localstorage', () => {
     expect(model.state.recipe.servings).toBe(4);
     expect(model.state.recipe.ingredients[0].quantity).toBe(4);
     expect(model.state.recipe.ingredients[1].quantity).toBe(0);
+  });
+});
+
+describe('Test uploadRecipe then deleteUserRecipe', () => {
+  let model;
+  let localStorageMock;
+  beforeAll(async () => {
+    localStorageMock = mockLocalStorage(false);
+    global.localStorage = localStorageMock;
+    await jest.isolateModulesAsync(async () => {
+      model = await import('../js/model');
+    });
+  });
+  afterEach(() => {
+    uploadRecipe.mockRestore();
+    deleteRecipe.mockRestore();
+    restoreLocalMockStorage(localStorageMock);
+  });
+
+  test('uploadRecipe then deleteUserRecipe', async () => {
+    const recipe = {
+      title: "James's Pizza",
+      sourceUrl: 'http://james.com',
+      image: 'http://james.com',
+      publisher: 'James',
+      cookingTime: '4',
+      servings: '1',
+      'ingredient-1': '1,,Cat',
+      'ingredient-2': '1,bag,orange fur',
+      'ingredient-3': ',,nails',
+      'ingredient-4': '',
+      'ingredient-5': '',
+      'ingredient-6': '',
+    };
+    uploadRecipe.mockImplementation(() => uploadedRecipeResults());
+    await model.uploadRecipe(recipe);
+    expect(model.state.recipe.title).toBe("James's Pizza");
+    expect(model.state.recipe.ingredients.length).toBe(3);
+    expect(model.state.recipe.bookmarked).toBe(true);
+    expect(model.state.bookmarks.length).toBe(1);
+
+    deleteRecipe.mockImplementation(() => {});
+    await model.deleteUserRecipe();
+    expect(model.state.bookmarks.length).toBe(0);
+    // after deleteUserRecipe model.state.recipe should be and empty object therefore no keys
+    expect(Object.keys(model.state.recipe).length).toBe(0);
   });
 });
