@@ -1,5 +1,6 @@
 import { async } from 'regenerator-runtime';
 import { loadRecipe, searchRecipes } from '../js/netlifyFunctions';
+import { beforeEach } from 'node:test';
 
 jest.mock('../js/netlifyFunctions', () => ({
   __esModule: true, // this property makes it work
@@ -208,5 +209,13 @@ describe('Testing model with empty localstorage', () => {
     expect(model.state.bookmarks.length).toBe(0);
     expect(localStorageMock.setItem).toHaveBeenCalled();
     expect(localStorageMock.setItem).toHaveBeenCalledWith('bookmarks', '[]');
+  });
+
+  test('updateServings', () => {
+    model.state.recipe = getRecipe();
+    model.updateServings(4);
+    expect(model.state.recipe.servings).toBe(4);
+    expect(model.state.recipe.ingredients[0].quantity).toBe(4);
+    expect(model.state.recipe.ingredients[1].quantity).toBe(0);
   });
 });
