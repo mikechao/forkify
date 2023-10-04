@@ -15,9 +15,9 @@ function getNonBookmarkedRecipeId() {
   return '3411342532253245ad24';
 }
 
-function getBookmarkedRecipe() {
+function getRecipe(bookmarked = true) {
   return {
-    id: getBookmarkedRecipeId(),
+    id: bookmarked ? getBookmarkedRecipeId() : getNonBookmarkedRecipeId(),
     title: "Geeno's Pizza",
     publisher: 'Geeno',
     sourceUrl: 'testing pizza',
@@ -30,7 +30,7 @@ function getBookmarkedRecipe() {
       { quantity: null, unit: '', description: 'salt' },
     ],
     key: '0fe58a46-944a-41f2-b3c8-5b6458414195',
-    bookmarked: true,
+    ...(bookmarked && { bookmark: true }),
   };
 }
 
@@ -42,9 +42,15 @@ function mockLocalStorage(includeBookmarked = true) {
   };
   if (includeBookmarked)
     localStorageMock.getItem.mockImplementation(() => {
-      return JSON.stringify([getBookmarkedRecipe()]);
+      return JSON.stringify([getRecipe()]);
     });
   return localStorageMock;
+}
+
+function restoreLocalMockStorage(localStorageMock) {
+  localStorageMock.getItem.mockRestore();
+  localStorageMock.setItem.mockRestore();
+  localStorageMock.clear.mockRestore();
 }
 
 /**
@@ -130,6 +136,7 @@ describe('Testing model with bookmarked recipe in localstorage', () => {
   });
   afterEach(() => {
     loadRecipe.mockRestore();
+    restoreLocalMockStorage(localStorageMock);
   });
 
   test('model init function, load bookmarks from localstorage', () => {
@@ -163,6 +170,7 @@ describe('Testing model with empty localstorage', () => {
   });
   afterEach(() => {
     searchRecipes.mockRestore();
+    restoreLocalMockStorage(localStorageMock);
   });
 
   test('model init with empty localstorage', () => {
@@ -177,5 +185,28 @@ describe('Testing model with empty localstorage', () => {
     expect(model.state.search.query).toBe('tea');
     expect(model.state.search.results.length).toBe(3);
     expect(model.state.search.page).toBe(1);
+
+    const values = model.getSearchResultsPage();
+    expect(values.length).toBe(3);
+    expect(model.state.search.page).toBe(1);
+  });
+
+  test('addBookmark then deleteBookmark', () => {
+    const recipe = getRecipe(false);
+    model.addBookmark(recipe);
+    expect(model.state.bookmarks.length).toBe(1);
+    expect(localStorageMock.setItem).toHaveBeenCalled();
+
+    // prettier-ignore
+    const stringfiy = "[{\"id\":\"3411342532253245ad24\",\"title\":\"Geeno's Pizza\",\"publisher\":\"Geeno\",\"sourceUrl\":\"testing pizza\",\"image\":\"https://lh3.googleusercontent.com/contacts/ADUEL1zXFUFdDiDykRFdlm2xMc_YCuQqT-tHCH67z26v7LoZlc2Yfjdq\",\"servings\":1,\"cookingTime\":5,\"ingredients\":[{\"quantity\":1,\"unit\":\"\",\"description\":\"Dog\"},{\"quantity\":null,\"unit\":\"\",\"description\":\"salt\"}],\"key\":\"0fe58a46-944a-41f2-b3c8-5b6458414195\"}]"
+    expect(localStorageMock.setItem).toHaveBeenCalledWith(
+      'bookmarks',
+      stringfiy
+    );
+
+    model.deleteBookmark(getNonBookmarkedRecipeId());
+    expect(model.state.bookmarks.length).toBe(0);
+    expect(localStorageMock.setItem).toHaveBeenCalled();
+    expect(localStorageMock.setItem).toHaveBeenCalledWith('bookmarks', '[]');
   });
 });
