@@ -1,9 +1,10 @@
 import { async } from 'regenerator-runtime';
-import { loadRecipe } from '../js/netlifyFunctions';
+import { loadRecipe, searchRecipes } from '../js/netlifyFunctions';
 
 jest.mock('../js/netlifyFunctions', () => ({
   __esModule: true, // this property makes it work
   loadRecipe: jest.fn(),
+  searchRecipes: jest.fn(),
 }));
 
 function getBookmarkedRecipeId() {
@@ -81,6 +82,39 @@ function loadedRecipeData(bookmarked = true) {
   };
 }
 
+function searchRecipesResults() {
+  return {
+    status: 'success',
+    results: 3,
+    data: {
+      recipes: [
+        {
+          publisher: 'BBC Food',
+          image_url:
+            'http://forkify-api.herokuapp.com/images/theultimatemasalatea_86647_16x92aa7.jpg',
+          title: 'The ultimate masala tea',
+          id: '5ed6604591c37cdc054bcf99',
+        },
+        {
+          publisher: 'Steamy Kitchen',
+          image_url:
+            'http://forkify-api.herokuapp.com/images/chinese_tea_egg1200x1502f10.jpg',
+          title: 'Chinese Marbled Tea Egg Recipe',
+          id: '5ed6604591c37cdc054bcd54',
+        },
+        {
+          publisher: 'Pastry Affair',
+          image_url:
+            'http://forkify-api.herokuapp.com/images/8490340733_91c07b6f0c_b149f.jpg',
+          title:
+            'Black Tea Cake with Honey&nbsp;Buttercream - Home - Pastry Affair',
+          id: '5ed6604591c37cdc054bcf9c',
+        },
+      ],
+    },
+  };
+}
+
 describe('Testing model with bookmarked recipe in localstorage', () => {
   let model;
   let localStorageMock;
@@ -127,10 +161,21 @@ describe('Testing model with empty localstorage', () => {
       model = await import('../js/model');
     });
   });
+  afterEach(() => {
+    searchRecipes.mockRestore();
+  });
 
   test('model init with empty localstorage', () => {
     expect(model.state.bookmarks.length).toBe(0);
     expect(localStorageMock.getItem).toHaveBeenCalled();
     expect(localStorageMock.getItem).toHaveBeenCalledWith('bookmarks');
+  });
+
+  test('loadSearchResults with results', async () => {
+    searchRecipes.mockImplementation(() => searchRecipesResults());
+    await model.loadSearchResults('tea');
+    expect(model.state.search.query).toBe('tea');
+    expect(model.state.search.results.length).toBe(3);
+    expect(model.state.search.page).toBe(1);
   });
 });
