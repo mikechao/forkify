@@ -5,6 +5,7 @@ import {
   uploadRecipe,
   deleteRecipe,
 } from '../js/netlifyFunctions';
+import { AJAX_SPOON_WIDGET } from '../js/helpers';
 
 jest.mock('../js/netlifyFunctions', () => ({
   __esModule: true, // this property makes it work
@@ -12,6 +13,11 @@ jest.mock('../js/netlifyFunctions', () => ({
   searchRecipes: jest.fn(),
   uploadRecipe: jest.fn(),
   deleteRecipe: jest.fn(),
+}));
+
+jest.mock('../js/helpers', () => ({
+  __esModule: true,
+  AJAX_SPOON_WIDGET: jest.fn(),
 }));
 
 function getBookmarkedRecipeId() {
@@ -259,6 +265,18 @@ describe('Testing model with empty localstorage', () => {
     expect(model.state.recipe.servings).toBe(4);
     expect(model.state.recipe.ingredients[0].quantity).toBe(4);
     expect(model.state.recipe.ingredients[1].quantity).toBe(0);
+  });
+
+  test('getNutirtionWidget', async () => {
+    // the spoonacular api returns around 22.9kb of html, not going to repeat that here
+
+    AJAX_SPOON_WIDGET.mockImplementation(() => 'bunch of html');
+    const recipe = getRecipe();
+    await model.getNutritionWidget(recipe);
+    expect(AJAX_SPOON_WIDGET).toHaveBeenCalled();
+    expect(AJAX_SPOON_WIDGET.mock.lastCall.length).toBe(1);
+    const args = AJAX_SPOON_WIDGET.mock.lastCall[0];
+    expect(args.includes(`servings=${recipe.servings}`)).toBe(true);
   });
 });
 
