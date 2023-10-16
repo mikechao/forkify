@@ -81,6 +81,16 @@ describe('recipeView test', () => {
     expect(document.documentElement.innerHTML).toMatchSnapshot();
   });
 
+  it('should render a recipe and nutrition widget correctly', () => {
+    const recipe = testHelper.getRecipe();
+    recipeView.render(recipe);
+    const widget = testHelper.nutritionWdigetContent();
+    recipeView.renderNutritionWidget(widget);
+    const iFrame = document.querySelector('.recipe__widget');
+    recipeView.widgetScriptFinished(iFrame, '');
+    expect(document.documentElement.innerHTML).toMatchSnapshot();
+  });
+
   it('should call the bookmark handler after rendering a recipe and bookmark button clicked', () => {
     const handler = jest.fn();
     recipeView.addHandlerAddBookmark(handler);
