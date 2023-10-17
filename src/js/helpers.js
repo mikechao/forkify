@@ -26,38 +26,3 @@ export const AJAX_SPOON_WIDGET = async function (url) {
     throw err;
   }
 };
-
-export const AJAX = async function (url, uploadData = undefined) {
-  try {
-    const fetchPro = uploadData
-      ? fetch(url, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(uploadData),
-        })
-      : fetch(url);
-    const res = await Promise.race([fetchPro, timeout(TIMEOUT_SEC)]);
-    const data = await res.json();
-    if (!res.ok) throw new Error(`${data.message} (${res.status})`);
-    return data;
-  } catch (err) {
-    throw err;
-  }
-};
-
-export const DELETE_AJAX = async function (url) {
-  try {
-    const res = await Promise.race([
-      fetch(url, { method: 'DELETE' }),
-      timeout(TIMEOUT_SEC),
-    ]);
-    if (!res.ok)
-      throw new Error(
-        `Something went wrong with delete ${res.status} (${res.toString()})`
-      );
-  } catch (err) {
-    throw err;
-  }
-};
