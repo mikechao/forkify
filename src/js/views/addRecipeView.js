@@ -113,7 +113,7 @@ class AddRecipeView extends View {
     Object.keys(recipe)
       .filter(key => !keysToIgnore.includes(key))
       .forEach(key => {
-        this._dataColumn.querySelector(`input[name=${key}]`).value =
+        this._dataColumn.querySelector(`input[name=${key}]`).defaultValue =
           recipe[key];
       });
 
@@ -124,7 +124,7 @@ class AddRecipeView extends View {
       const val = `${ing.quantity === null ? '' : ing.quantity},${
         ing.unit === null ? '' : ing.unit
       },${ing.description === null ? '' : ing.description}`;
-      input.value = val;
+      input.defaultValue = val;
       input.classList.remove('hidden');
       const label = this._ingredientsColumn.querySelector(
         `label[for=ingredient-${index + 1}]`

@@ -76,11 +76,13 @@ describe('recipeView test', () => {
   it('should update a recipe correctly after removing bookmark', () => {
     const recipe = testHelper.getRecipe();
     recipeView.render(recipe);
-    delete recipe.bookmark;
+    delete recipe.bookmarked;
     recipeView.update(recipe);
     expect(document.documentElement.innerHTML).toMatchSnapshot();
   });
 
+  // TODO figure out a way to test the iFrame contents
+  // right now this isn't a great test
   it('should render a recipe and nutrition widget correctly', () => {
     const recipe = testHelper.getRecipe();
     recipeView.render(recipe);
