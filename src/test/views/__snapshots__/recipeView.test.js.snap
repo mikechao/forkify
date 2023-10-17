@@ -121,12 +121,12 @@ exports[`recipeView test should render a recipe and nutrition widget correctly 1
         </svg>
       </div>
       <div class="recipe__info-buttons">
-        <button class="btn--round btn--delete recipe__delete-button">
+        <button class="btn--round btn--delete recipe__delete-button ">
           <svg class="">
             <use href="[object Object]#icon-delete"></use>
           </svg>
         </button>
-        <button class="btn--round btn--edit recipe__edit-button">
+        <button class="btn--round btn--edit recipe__edit-button ">
         <svg class="">
           <use href="[object Object]#icon-edit"></use>
         </svg>
@@ -416,12 +416,12 @@ exports[`recipeView test should render a recipe correctly 1`] = `
         </svg>
       </div>
       <div class="recipe__info-buttons">
-        <button class="btn--round btn--delete recipe__delete-button">
+        <button class="btn--round btn--delete recipe__delete-button ">
           <svg class="">
             <use href="[object Object]#icon-delete"></use>
           </svg>
         </button>
-        <button class="btn--round btn--edit recipe__edit-button">
+        <button class="btn--round btn--edit recipe__edit-button ">
         <svg class="">
           <use href="[object Object]#icon-edit"></use>
         </svg>
@@ -904,12 +904,12 @@ exports[`recipeView test should update a recipe correctly after removing bookmar
         </svg>
       </div>
       <div class="recipe__info-buttons">
-        <button class="btn--round btn--delete recipe__delete-button">
+        <button class="btn--round btn--delete recipe__delete-button ">
           <svg class="">
             <use href="[object Object]#icon-delete"></use>
           </svg>
         </button>
-        <button class="btn--round btn--edit recipe__edit-button">
+        <button class="btn--round btn--edit recipe__edit-button ">
         <svg class="">
           <use href="[object Object]#icon-edit"></use>
         </svg>
