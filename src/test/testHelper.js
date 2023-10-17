@@ -1,3 +1,34 @@
+export function netlifyLoadReceipeResult() {
+  return {
+    status: 'success',
+    data: {
+      recipe: {
+        title: "Geeno's Pizza",
+        source_url: 'testing pizza',
+        image_url:
+          'https://lh3.googleusercontent.com/contacts/ADUEL1zXFUFdDiDykRFdlm2xMc_YCuQqT-tHCH67z26v7LoZlc2Yfjdq',
+        publisher: 'Geeno',
+        cooking_time: 5,
+        servings: 1,
+        ingredients: [
+          {
+            quantity: 1,
+            unit: '',
+            description: 'Dog',
+          },
+          {
+            quantity: null,
+            unit: '',
+            description: 'salt',
+          },
+        ],
+        key: '0fe58a46-944a-41f2-b3c8-5b6458414195',
+        id: '65147903622c9a0014492004',
+      },
+    },
+  };
+}
+
 export function getBookmarkedRecipeId() {
   return '65147903622c9a0014492004';
 }
