@@ -128,7 +128,7 @@ export const searchRecipes = async function (query) {
  */
 export const uploadRecipe = async function (recipe) {
   try {
-    const apiURL = `${baseURL}/uploadRecipe`;
+    const apiURL = `${baseURL}uploadRecipe`;
     const res = await fetch(apiURL, {
       method: 'POST',
       body: JSON.stringify(recipe),
