@@ -21,7 +21,7 @@ export function getRecipe(bookmarked = true) {
       { quantity: null, unit: '', description: 'salt' },
     ],
     key: '0fe58a46-944a-41f2-b3c8-5b6458414195',
-    ...(bookmarked && { bookmark: true }),
+    ...(bookmarked && { bookmarked: true }),
   };
 }
 

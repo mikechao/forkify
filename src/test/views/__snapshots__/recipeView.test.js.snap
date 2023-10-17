@@ -133,7 +133,7 @@ exports[`recipeView test should render a recipe and nutrition widget correctly 1
       </button>
         <button class="btn--round btn--bookmark recipe__bookmark-button">
           <svg class="">
-            <use href="[object Object]#icon-bookmark"></use>
+            <use href="[object Object]#icon-bookmark-fill"></use>
           </svg>
         </button>
       </div>
@@ -428,7 +428,7 @@ exports[`recipeView test should render a recipe correctly 1`] = `
       </button>
         <button class="btn--round btn--bookmark recipe__bookmark-button">
           <svg class="">
-            <use href="[object Object]#icon-bookmark"></use>
+            <use href="[object Object]#icon-bookmark-fill"></use>
           </svg>
         </button>
       </div>
