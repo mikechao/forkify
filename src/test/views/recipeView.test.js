@@ -7,16 +7,7 @@ import {
   addHandlerDeleteUserRecipe,
   show,
 } from '../../js/views/deleteModalView';
-
-const fs = require('fs');
-const path = require('path');
-const { async } = require('regenerator-runtime');
-const html = fs.readFileSync(
-  path.resolve(__dirname, '../../../index.html'),
-  'utf8'
-);
-
-jest.dontMock('fs');
+const html = testHelper.indexHTMLContent().toString();
 
 const mockShowEditWindow = jest.fn();
 jest.mock('../../js/views/addRecipeView', () => ({
@@ -33,7 +24,7 @@ jest.mock('../../js/views/deleteModalView', () => ({
 describe('recipeView test', () => {
   let recipeView;
   beforeEach(async () => {
-    document.documentElement.innerHTML = html.toString();
+    document.documentElement.innerHTML = html;
     let recipeViewM;
     await jest.isolateModulesAsync(async () => {
       recipeViewM = await import('../../js/views/recipeView');

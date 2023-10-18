@@ -2,21 +2,13 @@
  * @jest-environment jsdom
  */
 import * as testHelper from '../testHelper';
-const fs = require('fs');
-const path = require('path');
-const { async } = require('regenerator-runtime');
-const html = fs.readFileSync(
-  path.resolve(__dirname, '../../../index.html'),
-  'utf8'
-);
-
-jest.dontMock('fs');
+const html = testHelper.indexHTMLContent().toString();
 
 describe('paginationView test', () => {
   let paginationView;
   let data;
   beforeEach(async () => {
-    document.documentElement.innerHTML = html.toString();
+    document.documentElement.innerHTML = html;
     let paginationViewM;
     await jest.isolateModulesAsync(async () => {
       paginationViewM = await import('../../js/views/paginationView');

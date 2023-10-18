@@ -2,20 +2,12 @@
  * @jest-environment jsdom
  */
 import * as testHelper from '../testHelper';
-const fs = require('fs');
-const path = require('path');
-const { async } = require('regenerator-runtime');
-const html = fs.readFileSync(
-  path.resolve(__dirname, '../../../index.html'),
-  'utf8'
-);
-
-jest.dontMock('fs');
+const html = testHelper.indexHTMLContent().toString();
 
 describe('resultsView test', () => {
   let resultView;
   beforeEach(async () => {
-    document.documentElement.innerHTML = html.toString();
+    document.documentElement.innerHTML = html;
     let resultViewM;
     await jest.isolateModulesAsync(async () => {
       resultViewM = await import('../../js/views/resultsView');
