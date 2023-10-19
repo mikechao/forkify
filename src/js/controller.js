@@ -187,3 +187,7 @@ const init = function () {
   addRecipeView.addHandlerUpload(controlAddRecipe, controlEditUserRecipe);
 };
 init();
+
+if (process.env['NODE_DEV'] === 'TEST-112233') {
+  module.exports.controlRecipes = controlRecipes;
+}
