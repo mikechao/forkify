@@ -190,4 +190,7 @@ init();
 
 if (process.env['NODE_DEV'] === 'TEST-112233') {
   module.exports.controlRecipes = controlRecipes;
+  module.exports.controlSearchResults = controlSearchResults;
+  module.exports.controlPagination = controlPagination;
+  module.exports.controlServings = controlServings;
 }
