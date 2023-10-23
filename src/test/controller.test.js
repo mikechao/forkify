@@ -30,31 +30,35 @@ describe('controller test controlRecipes', () => {
     expect(document.documentElement.innerHTML).toMatchSnapshot();
   });
 
-  it('should render correctly', async () => {
+  it('should the test recipe render correctly', async () => {
     window.location.hash = '#' + testHelper.getNonBookmarkedRecipeId();
-    const mockSearchRecipesResults = testHelper.searchRecipesResults();
-    const mockGetNutritionWidget = jest
-      .fn()
-      .mockImplementation(testHelper.nutritionWdigetContent());
-    const mockBookmarks = testHelper.bookmarkedRecipes();
-    const mockRecipe = testHelper.getRecipe();
-    jest.mock('../js/model', () => {
-      const originalModule = jest.requireActual('../js/model');
-      return {
-        __esModule: true,
-        ...originalModule,
-        loadRecipe: jest.fn().mockImplementation(() => Promise.resolve('test')),
-        getNutritionWidget: mockGetNutritionWidget,
-        state: {
-          bookmarks: mockBookmarks,
-          recipe: mockRecipe,
-          search: {
-            results: mockSearchRecipesResults,
-            page: 23,
-          },
-        },
-      };
-    });
+    const mockModel = {
+      getSearchResultsPage: jest.fn(() => []),
+      loadRecipe: jest.fn(() => []),
+      getNutritionWidget: jest.fn(() => testHelper.nutritionWdigetContent()),
+      state: {
+        bookmarks: [],
+        recipe: testHelper.getRecipe(),
+      },
+    };
+    jest.mock('../js/model', () => mockModel);
+    const controller = await getController();
+    await controller.controlRecipes();
+    expect(document.documentElement.innerHTML).toMatchSnapshot();
+  });
+
+  it('should render the error message correctly when the id does not exist', async () => {
+    window.location.hash = '#123456789';
+    const mockModel = {
+      getSearchResultsPage: jest.fn(() => []),
+      loadRecipe: jest.fn().mockRejectedValue(new Error('Testings error')),
+      getNutritionWidget: jest.fn(() => testHelper.nutritionWdigetContent()),
+      state: {
+        bookmarks: [],
+        recipe: testHelper.getRecipe(),
+      },
+    };
+    jest.mock('../js/model', () => mockModel);
     const controller = await getController();
     await controller.controlRecipes();
     expect(document.documentElement.innerHTML).toMatchSnapshot();
