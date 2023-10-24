@@ -193,4 +193,9 @@ if (process.env['NODE_DEV'] === 'TEST-112233') {
   module.exports.controlSearchResults = controlSearchResults;
   module.exports.controlPagination = controlPagination;
   module.exports.controlServings = controlServings;
+  module.exports.controlAddBookmark = controlAddBookmark;
+  module.exports.controlDeleteUserRecipe = controlDeleteUserRecipe;
+  module.exports.controlBookmarks = controlBookmarks;
+  module.exports.controlAddRecipe = controlAddRecipe;
+  module.exports.controlEditUserRecipe = controlEditUserRecipe;
 }
