@@ -192,7 +192,7 @@ class AddRecipeView extends View {
     ingInput.setAttribute('placeholder', `Format: 'Quantity,Unit,Description'`);
     ingInput.setAttribute('data-validate', 'isIngredient');
     ingInput.addEventListener('blur', () => this.validateElement(ingInput));
-    ingInput.addEventListener('input', () => this.resetValidation(ingInput));
+    ingInput.addEventListener('focus', () => this.resetValidation(ingInput));
     const spacerSpan = document.createElement('span');
     spacerSpan.id = 'spacer';
     spacerSpan.classList.add('hidden');
