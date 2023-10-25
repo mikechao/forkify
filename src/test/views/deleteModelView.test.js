@@ -55,4 +55,18 @@ describe('deleteModelView test', () => {
     deleteModalView.hide();
     expect(document.documentElement.innerHTML).toMatchSnapshot();
   });
+
+  it('should return undefined for _generateMarkup', () => {
+    const result = deleteModalView._generateMarkup();
+    expect(result).toBeUndefined();
+  });
+
+  it('should hide the window after timer is reached', () => {
+    jest.useFakeTimers();
+    const recipe = testHelper.getRecipe();
+    deleteModalView.show(recipe);
+    deleteModalView.hideWithTimeout();
+    jest.runAllTimers();
+    expect(document.documentElement.innerHTML).toMatchSnapshot();
+  });
 });

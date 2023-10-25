@@ -34,11 +34,16 @@ class DeleteModalView extends View {
         if (status) that.renderMessage();
         if (!status) that.renderError(message);
         that._messageRender = true;
-        setTimeout(function () {
-          that.hide();
-        }, MODEL_CLOSE_SEC * 1000);
+        that.hideWithTimeout();
       });
     });
+  }
+
+  hideWithTimeout() {
+    const that = this;
+    setTimeout(function () {
+      that.hide();
+    }, MODEL_CLOSE_SEC * 1000);
   }
 
   show(recipe) {
