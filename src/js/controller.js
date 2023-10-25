@@ -141,9 +141,7 @@ const controlAddRecipe = async function (newRecipe, message = '') {
     window.history.pushState(null, '', `#${model.state.recipe.id}`);
 
     // close form window
-    setTimeout(function () {
-      addRecipeView.closeWindow();
-    }, MODEL_CLOSE_SEC * 1000);
+    closeAddRecipeView();
   } catch (err) {
     console.error('🤷‍♀️🤦‍♂️', err);
     addRecipeView.renderError(err.message);
@@ -157,14 +155,18 @@ const controlEditUserRecipe = async function (editedRecipe) {
     if (isEqual) {
       addRecipeView.renderMessage('No changes detected, recipe not updated');
       // close form window
-      setTimeout(function () {
-        addRecipeView.closeWindow();
-      }, MODEL_CLOSE_SEC * 1000);
+      closeAddRecipeView();
     }
-    if (!isEqual) handleRecipeChanged(editedRecipe);
+    if (!isEqual) await handleRecipeChanged(editedRecipe);
   } catch (err) {
     console.error('🤷‍♀️🤦‍♂️', err);
   }
+};
+
+const closeAddRecipeView = function () {
+  setTimeout(function () {
+    addRecipeView.closeWindow();
+  }, MODEL_CLOSE_SEC * 1000);
 };
 
 const handleRecipeChanged = async function (editedRecipe) {
@@ -198,4 +200,5 @@ if (process.env['NODE_DEV'] === 'TEST-112233') {
   module.exports.controlBookmarks = controlBookmarks;
   module.exports.controlAddRecipe = controlAddRecipe;
   module.exports.controlEditUserRecipe = controlEditUserRecipe;
+  module.exports.closeAddRecipeView = closeAddRecipeView;
 }

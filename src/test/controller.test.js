@@ -111,6 +111,24 @@ describe('controller test controlSearchResults', () => {
   });
 });
 
+it('should log the error when model.loadSearchResults throws error', async () => {
+  const searchField = document.querySelector('.search__field');
+  searchField.value = 'tea';
+  let model;
+  let controller;
+  await jest.isolateModulesAsync(async () => {
+    model = await import('../js/model');
+    controller = await import('../js/controller');
+  });
+  const message = 'This is testing error';
+  jest.spyOn(model, 'loadSearchResults').mockImplementation(() => {
+    throw new Error(message);
+  });
+  const logSpy = jest.spyOn(console, 'log');
+  await controller.controlSearchResults();
+  expect(logSpy).toHaveBeenCalled();
+});
+
 describe('controller test controlPagination', () => {
   beforeEach(() => {
     document.documentElement.innerHTML = html;
@@ -252,6 +270,26 @@ describe('controller test controlDeleteUserRecipe', () => {
       model.state.search.page = 1;
       model.state.search.resultsPerPage = 1;
       model.state.search.results = searchResults;
+      controller = await import('../js/controller');
+    });
+    jest.spyOn(model, 'deleteUserRecipe').mockImplementation(() => []);
+    const result = await controller.controlDeleteUserRecipe();
+    expect(result.status).toBe(true);
+    expect(document.documentElement.innerHTML).toMatchSnapshot();
+  });
+
+  it('should return true when no search results', async () => {
+    let controller;
+    let model;
+    const recipe = testHelper.getRecipe(true);
+    await jest.isolateModulesAsync(async () => {
+      model = await import('../js/model');
+      model.state.bookmarks = [];
+      model.state.recipe = recipe;
+      model.state.search.query = 'tea';
+      model.state.search.page = 1;
+      model.state.search.resultsPerPage = 1;
+      model.state.search.results = [];
       controller = await import('../js/controller');
     });
     jest.spyOn(model, 'deleteUserRecipe').mockImplementation(() => []);
@@ -434,5 +472,55 @@ describe('controller test controlEditUserRecipe', () => {
     };
     await controller.controlEditUserRecipe(editedRecipe);
     expect(document.documentElement.innerHTML).toMatchSnapshot();
+  });
+
+  it('should log the error when model.deleteUserRecipe throws', async () => {
+    let controller;
+    let model;
+    const recipe = testHelper.getRecipe(true);
+    await jest.isolateModulesAsync(async () => {
+      model = await import('../js/model');
+      model.state.recipe = recipe;
+      model.state.bookmarks = [];
+      controller = await import('../js/controller');
+    });
+
+    const editedRecipe = {
+      title: "Geeno's Pizza",
+      sourceUrl: 'testing pizza',
+      image:
+        'https://lh3.googleusercontent.com/contacts/ADUEL1zXFUFdDiDykRFdlm2xMc_YCuQqT-tHCH67z26v7LoZlc2Yfjdq',
+      publisher: 'Geeno',
+      cookingTime: '5',
+      servings: '1',
+      'ingredient-1': '1,,Dog',
+      'ingredient-2': ',,salt',
+      'ingredient-3': ',,apple',
+      'ingredient-4': '',
+      'ingredient-5': '',
+      'ingredient-6': '',
+    };
+    const message = 'This is a testing error';
+    jest.spyOn(model, 'deleteUserRecipe').mockImplementation(() => {
+      throw new Error(message);
+    });
+    const consoleErrorSpy = jest.spyOn(console, 'error');
+    await controller.controlEditUserRecipe(editedRecipe);
+    expect(consoleErrorSpy).toHaveBeenCalled();
+  });
+
+  it('should call addReviewView.closeWindow', async () => {
+    let controller;
+    let addRecipeView;
+    const recipe = testHelper.getRecipe(true);
+    await jest.isolateModulesAsync(async () => {
+      addRecipeView = (await import('../js/views/addRecipeView')).default;
+      controller = await import('../js/controller');
+    });
+    const addRecipeViewSpy = jest.spyOn(addRecipeView, 'closeWindow');
+    jest.useFakeTimers();
+    controller.closeAddRecipeView();
+    jest.runAllTimers();
+    expect(addRecipeViewSpy).toHaveBeenCalled();
   });
 });
