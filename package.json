@@ -8,7 +8,7 @@
     "build": "parcel build index.html --dist-dir ./dist",
     "dev": "netlify dev",
     "debug": "netlify dev --inspect",
-    "test": "jest",
+    "test": "jest --silent",
     "test:debug": "jest --runInBand",
     "test:updateSnapshot": "jest --updateSnapshot"
   },
