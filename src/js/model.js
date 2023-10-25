@@ -153,7 +153,7 @@ const init = function () {
 
 init();
 
-const clearBookmarks = function () {
+export const clearBookmarks = function () {
   localStorage.clear('bookmarks');
 };
 

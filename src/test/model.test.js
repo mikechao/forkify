@@ -148,6 +148,16 @@ describe('Testing model with bookmarked recipe in localstorage', () => {
     await model.loadRecipe(testHelper.getNonBookmarkedRecipeId());
     expect(model.state.recipe.bookmarked).toBe(false);
   });
+
+  test('netlifyFuntions.loadRecipe throws error, model should too', () => {
+    const message = 'This is a testing error';
+    loadRecipe.mockImplementation(() => {
+      throw new Error(message);
+    });
+    expect(async () => {
+      await model.loadRecipe('12345');
+    }).rejects.toThrow(message);
+  });
 });
 
 describe('Testing model with empty localstorage', () => {
@@ -181,6 +191,23 @@ describe('Testing model with empty localstorage', () => {
     const values = model.getSearchResultsPage();
     expect(values.length).toBe(3);
     expect(model.state.search.page).toBe(1);
+  });
+
+  test('clearBookmarks', () => {
+    model.clearBookmarks();
+    expect(localStorageMock.clear).toHaveBeenCalled();
+    expect(localStorageMock.clear).toHaveBeenCalledWith('bookmarks');
+  });
+
+  test('netlifyFuntions.searchReipes throws error, model should too', () => {
+    const message = 'This is a testing error';
+    searchRecipes.mockImplementation(() => {
+      throw new Error(message);
+    });
+
+    expect(async () => {
+      await model.loadSearchResults('apple');
+    }).rejects.toThrow(message);
   });
 
   test('addBookmark then deleteBookmark', () => {
@@ -220,6 +247,17 @@ describe('Testing model with empty localstorage', () => {
     expect(AJAX_SPOON_WIDGET.mock.lastCall.length).toBe(1);
     const args = AJAX_SPOON_WIDGET.mock.lastCall[0];
     expect(args.includes(`servings=${recipe.servings}`)).toBe(true);
+  });
+
+  test('getNutirtionWidget api throws error, model should throw it too', () => {
+    const errorMessage = 'This is a testing error';
+    AJAX_SPOON_WIDGET.mockImplementation(() => {
+      throw new Error(errorMessage);
+    });
+    const recipe = testHelper.getRecipe();
+    expect(async () => {
+      await model.getNutritionWidget(recipe);
+    }).rejects.toThrow(errorMessage);
   });
 });
 
@@ -261,10 +299,55 @@ describe('Test uploadRecipe then deleteUserRecipe', () => {
     expect(model.state.recipe.bookmarked).toBe(true);
     expect(model.state.bookmarks.length).toBe(1);
 
+    model.state.search.results.push({
+      publisher: 'James',
+      image_url: 'http://james.com',
+      title: "James's Pizza",
+      id: '651ddad373368200146f3dd9',
+    });
     deleteRecipe.mockImplementation(() => {});
     await model.deleteUserRecipe();
     expect(model.state.bookmarks.length).toBe(0);
     // after deleteUserRecipe model.state.recipe should be and empty object therefore no keys
     expect(Object.keys(model.state.recipe).length).toBe(0);
+    expect(model.state.search.results.length).toBe(0);
+  });
+
+  it('should throw error when netlifyFuntions.deleteRecipe throws error', () => {
+    const recipe = testHelper.getRecipe();
+    model.state.recipe = recipe;
+    const message = 'This is a testing error';
+    deleteRecipe.mockImplementation(() => {
+      throw new Error(message);
+    });
+    expect(async () => {
+      await model.deleteUserRecipe();
+    }).rejects.toThrow(message);
+  });
+
+  it('should throw error when netlifyFuntions.uploadREcipe throws error', () => {
+    const recipe = {
+      title: "James's Pizza",
+      sourceUrl: 'http://james.com',
+      image: 'http://james.com',
+      publisher: 'James',
+      cookingTime: '4',
+      servings: '1',
+      'ingredient-1': '1,,Cat',
+      'ingredient-2': '1,bag,orange fur',
+      'ingredient-3': ',,nails',
+      'ingredient-4': '',
+      'ingredient-5': '',
+      'ingredient-6': '',
+    };
+
+    const message = 'This is a testing error';
+    uploadRecipe.mockImplementation(() => {
+      throw new Error(message);
+    });
+
+    expect(async () => {
+      await model.uploadRecipe(recipe);
+    }).rejects.toThrow(message);
   });
 });
