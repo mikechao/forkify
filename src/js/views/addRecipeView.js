@@ -256,9 +256,7 @@ class AddRecipeView extends View {
   isFormValid() {
     const inputs = this._parentElement.querySelectorAll('input');
     inputs.forEach(input => {
-      if (!input.dataset) return;
-      if (!input.dataset.validate) return;
-      this.validateElement(input);
+      if (input.dataset && input.dataset.validate) this.validateElement(input);
     });
     const formIsValid =
       this._parentElement.querySelectorAll('.invalid').length === 0;
