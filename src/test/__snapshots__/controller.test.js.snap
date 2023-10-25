@@ -3060,7 +3060,7 @@ exports[`controller test controlSearchResults should render the search views cor
         <div class="preview__data">
             <h4 class="preview__title">Black Tea Cake with Honey&nbsp;Buttercream - Home - Pastry Affair</h4>
             <p class="preview__publisher">Pastry Affair</p>
-            <div class="recipe__user-generated hidden">
+            <div class="recipe__user-generated ">
               <svg>
                 <use href="[object Object]#icon-user"></use>
               </svg>

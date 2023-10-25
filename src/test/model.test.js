@@ -242,6 +242,11 @@ describe('Testing model with empty localstorage', () => {
 
     AJAX_SPOON_WIDGET.mockImplementation(() => 'bunch of html');
     const recipe = testHelper.getRecipe();
+    recipe.ingredients.push({
+      quantity: 1,
+      unit: 'oz',
+      description: 'butter',
+    });
     await model.getNutritionWidget(recipe);
     expect(AJAX_SPOON_WIDGET).toHaveBeenCalled();
     expect(AJAX_SPOON_WIDGET.mock.lastCall.length).toBe(1);

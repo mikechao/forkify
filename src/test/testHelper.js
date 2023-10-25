@@ -90,10 +90,11 @@ export function searchRecipesResults() {
         {
           publisher: 'Pastry Affair',
           image_url:
-            'http://forkify-api.herokuapp.com/images/8490340733_91c07b6f0c_b149f.jpg',
+            'https://forkify-api.herokuapp.com/images/8490340733_91c07b6f0c_b149f.jpg',
           title:
             'Black Tea Cake with Honey&nbsp;Buttercream - Home - Pastry Affair',
           id: '5ed6604591c37cdc054bcf9c',
+          key: '0fe58a46-944a-41f2-b3c8-5b6458414195',
         },
       ],
     },

@@ -54,8 +54,15 @@ describe('recipeView test', () => {
     expect(handler).toHaveBeenCalledTimes(2);
   });
 
-  it('should render a recipe correctly', () => {
+  it('should render a user recipe correctly', () => {
     const recipe = testHelper.getRecipe();
+    recipeView.render(recipe);
+    expect(document.documentElement.innerHTML).toMatchSnapshot();
+  });
+
+  it('should render a non user recipe correctly', () => {
+    const recipe = testHelper.getRecipe();
+    delete recipe.key;
     recipeView.render(recipe);
     expect(document.documentElement.innerHTML).toMatchSnapshot();
   });
