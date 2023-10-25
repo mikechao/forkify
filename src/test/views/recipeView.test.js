@@ -2,11 +2,7 @@
  * @jest-environment jsdom
  */
 import * as testHelper from '../testHelper';
-import { showEditWindow } from '../../js/views/addRecipeView';
-import {
-  addHandlerDeleteUserRecipe,
-  show,
-} from '../../js/views/deleteModalView';
+
 const html = testHelper.indexHTMLContent().toString();
 
 const mockShowEditWindow = jest.fn();
@@ -92,6 +88,13 @@ describe('recipeView test', () => {
     const bookmarkBtn = document.querySelector('.btn--bookmark');
     bookmarkBtn.click();
     expect(handler).toHaveBeenCalled();
+
+    handler.mockClear();
+    const minusServingsBtn = document.querySelector(
+      '.btn--update-servings-minus'
+    );
+    minusServingsBtn.click();
+    expect(handler).not.toHaveBeenCalled();
   });
 
   it('should call deleteModalView.show after rendering a recipe and delete button is clicked', () => {
@@ -126,5 +129,10 @@ describe('recipeView test', () => {
     );
     plusServingsBtn.click();
     expect(handler).toHaveBeenCalled();
+
+    handler.mockClear();
+    const bookmarksBtn = document.querySelector('.btn--bookmark');
+    bookmarksBtn.click();
+    expect(handler).not.toHaveBeenCalled();
   });
 });
