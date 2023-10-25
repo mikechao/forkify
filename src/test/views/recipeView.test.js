@@ -80,6 +80,22 @@ describe('recipeView test', () => {
     expect(document.documentElement.innerHTML).toMatchSnapshot();
   });
 
+  it('should write content to iFrame', () => {
+    const iFrame = document.createElement('iframe');
+    const content = testHelper.nutritionWdigetContent();
+    // add the iFrame so contentWindow is not null (so it's loaded)
+    document.body.appendChild(iFrame);
+    document.body.removeChild(iFrame);
+    jest.useFakeTimers();
+    recipeView.widgetLoaded(iFrame, content);
+    iFrame.contentWindow.jQuery = true;
+    iFrame.contentWindow.CanvasJS = true;
+    jest.runAllTimers();
+    expect(iFrame.contentDocument).not.toBeNull();
+    expect(iFrame.contentDocument.body).not.toBeNull();
+    expect(iFrame.contentDocument.body.innerHTML).not.toBeNull();
+  });
+
   it('should call the bookmark handler after rendering a recipe and bookmark button clicked', () => {
     const handler = jest.fn();
     recipeView.addHandlerAddBookmark(handler);
