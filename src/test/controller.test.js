@@ -512,7 +512,6 @@ describe('controller test controlEditUserRecipe', () => {
   it('should call addReviewView.closeWindow', async () => {
     let controller;
     let addRecipeView;
-    const recipe = testHelper.getRecipe(true);
     await jest.isolateModulesAsync(async () => {
       addRecipeView = (await import('../js/views/addRecipeView')).default;
       controller = await import('../js/controller');
@@ -522,5 +521,20 @@ describe('controller test controlEditUserRecipe', () => {
     controller.closeAddRecipeView();
     jest.runAllTimers();
     expect(addRecipeViewSpy).toHaveBeenCalled();
+  });
+});
+
+describe('controller test in non test env', () => {
+  afterEach(() => {
+    process.env['NODE_DEV'] = 'TEST-112233';
+  });
+
+  it('should not export any functions', async () => {
+    let controller;
+    process.env['NODE_DEV'] = 'apple';
+    await jest.isolateModulesAsync(async () => {
+      controller = await import('../js/controller');
+    });
+    expect(controller.controlSearchResults).toBeUndefined();
   });
 });
