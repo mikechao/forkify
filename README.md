@@ -50,6 +50,8 @@ npm run dev
 ```
 ## 👷 Built with
 - [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) : Programming language used!
+- [Parcel](https://parceljs.org/) : For bundling and building
+- [npm](https://www.npmjs.com/) : JavaScript package manager
 - [Jest](https://jestjs.io/) : For writing tests and code coverage
 - [Netlify](https://www.netlify.com/) : For hosting and servless functions
 - [Github](https://github.com/ "Github") : For Repo Storage and source code management
