@@ -772,6 +772,133 @@ exports[`addRecipeView test should render add and remove ingredient correctly 3`
 </body>"
 `;
 
+exports[`addRecipeView test should render default error message correctly 1`] = `
+"<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,600,700" rel="stylesheet">
+    <link rel="shortcut icon" href="src/img/favicon.png" type="image/x-icon">
+
+    <link rel="stylesheet" href="src/sass/main.scss">
+    <script type="module" defer="" src="src/js/controller.js"></script>
+
+    <title>forkify // Search over 1,000,000 recipes</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header class="header">
+        <a href="/">
+          <img src="src/img/logo.png" alt="Logo" class="header__logo">
+        </a>
+        <form class="search">
+          <input type="text" class="search__field" placeholder="Search over 1,000,000 recipes...">
+          <button class="btn search__btn">
+            <svg class="search__icon">
+              <use href="src/img/icons.svg#icon-search"></use>
+            </svg>
+            <span>Search</span>
+          </button>
+        </form>
+
+        <nav class="nav">
+          <ul class="nav__list">
+            <li class="nav__item">
+              <button class="nav__btn nav__btn--add-recipe">
+                <svg class="nav__icon">
+                  <use href="src/img/icons.svg#icon-edit"></use>
+                </svg>
+                <span>Add recipe</span>
+              </button>
+            </li>
+            <li class="nav__item">
+              <button class="nav__btn nav__btn--bookmarks">
+                <svg class="nav__icon">
+                  <use href="src/img/icons.svg#icon-bookmark"></use>
+                </svg>
+                <span>Bookmarks</span>
+              </button>
+              <div class="bookmarks">
+                <ul class="bookmarks__list">
+                  <div class="message">
+                    <div>
+                      <svg>
+                        <use href="src/img/icons.svg#icon-smile"></use>
+                      </svg>
+                    </div>
+                    <p>
+                      No bookmarks yet. Find a nice recipe and bookmark it :)
+                    </p>
+                  </div>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+      <div class="search-results">
+        <ul class="results"></ul>
+
+        <div class="pagination"></div>
+
+        <p class="copyright">
+          © Copyright by
+          <a class="twitter-link" target="_blank" href="https://twitter.com/jonasschmedtman">Jonas Schmedtmann</a>. Use for learning or your portfolio. Don't use to teach. Don't claim
+          as your own.
+        </p>
+      </div>
+
+      <div class="recipe">
+        <div class="message">
+          <div>
+            <svg>
+              <use href="src/img/icons.svg#icon-smile"></use>
+            </svg>
+          </div>
+          <p>Start by searching for a recipe or an ingredient. Have fun!</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="del-modal hidden">
+      <button class="btn--close-del-modal">×</button>
+      <div class="del-modal__content">
+        <h3 class="del-modal__heading delContent">
+          Are you sure you want to delete this recipe?
+        </h3>
+        <div class="del-modal__preview delContent"></div>
+        <div class="del-modal__buttons delContent">
+          <button class="btn del-modal__cancel-btn" type="button">
+            <span>Cancel</span>
+          </button>
+          <button class="btn del-modal__delete-btn" type="button">
+            <span>Delete</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay hidden"></div>
+    <div class="add-recipe-window hidden">
+      <button class="btn--close-modal">×</button>
+      <form class="upload">
+        <div class="error">
+            <div>
+              <svg>
+                <use href="[object Object]#icon-alert-triangle"></use>
+              </svg>
+            </div>
+            <p>undefined</p>
+        </div>
+    </form>
+    </div>
+  
+
+</body>"
+`;
+
 exports[`addRecipeView test should render error message correctly 1`] = `
 "<head>
     <meta charset="UTF-8">
@@ -1952,8 +2079,8 @@ exports[`addRecipeView test should show editing a recipe correctly and the editH
           <input value=",,salt" type="text" name="ingredient-2" placeholder="Format: 'Quantity,Unit,Description'" data-validate="isIngredient">
           <span id="spacer" class="hidden"></span>
           <span id="ingredient-2Error" class="hidden">Please use the Format: 'Quantity,Unit,Description'</span>
-          <label for="ingredient-3" class="hidden">Ingredient 3</label>
-          <input type="text" name="ingredient-3" placeholder="Format: 'Quantity,Unit,Description'" class="hidden" data-validate="isIngredient">
+          <label for="ingredient-3" class="">Ingredient 3</label>
+          <input type="text" name="ingredient-3" placeholder="Format: 'Quantity,Unit,Description'" class="" data-validate="isIngredient" value="1,,">
           <span id="spacer" class="hidden"></span>
           <span id="ingredient-3Error" class="hidden">Please use the Format: 'Quantity,Unit,Description'</span>
           <label for="ingredient-4" class="hidden">Ingredient 4</label>

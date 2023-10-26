@@ -26,6 +26,7 @@ describe('addRecipeView test', () => {
 
   it('should show editing a recipe correctly and the editHandler is called when form is submitted', () => {
     const recipe = testHelper.getRecipe();
+    recipe.ingredients.push({ quantity: 1, unit: null, description: null });
     const addHandler = jest.fn();
     const editHandler = jest.fn();
     addRecipeView.addHandlerUpload(addHandler, editHandler);
@@ -61,6 +62,11 @@ describe('addRecipeView test', () => {
 
   it('should render error message correctly', () => {
     addRecipeView.renderError('Test error message');
+    expect(document.documentElement.innerHTML).toMatchSnapshot();
+  });
+
+  it('should render default error message correctly', () => {
+    addRecipeView.renderError();
     expect(document.documentElement.innerHTML).toMatchSnapshot();
   });
 
