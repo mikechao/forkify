@@ -3,7 +3,7 @@
   Search over 1,000,000 recipes with the ablity to bookmark and upload custom user recipes
 </p>
 <p align="center">
-  <img src="/readmeAssets/forkify.png" alt="forkify screenshot"/>
+  <img src="/readmeAssets/forkify.jpg" alt="forkify screenshot"/>
 </p>
 
 ## 🛠️ Installation Steps
