@@ -1,8 +1,6 @@
 <h1 align="center">🍴forkify🍴</h1>
 <p align="center">
   Search over 1,000,000 recipes with the ablity to bookmark and upload custom user recipes
-</p>
-<p align="center">
   <img src="/readmeAssets/forkify.jpg" alt="forkify screenshot"/>
 </p>
 
@@ -48,11 +46,18 @@ npm install
 ```Bash
 npm run dev
 ```
+
+## Deployed
+
+Currently deployed at https://forkify-mike-chao.netlify.app/
+
 ## 👷 Built with
+
 - [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) : Programming language used!
+- [Visual Studio Code](https://code.visualstudio.com/) : Integrated development environment
 - [Parcel](https://parceljs.org/) : For bundling and building
 - [npm](https://www.npmjs.com/) : JavaScript package manager
 - [Jest](https://jestjs.io/) : For writing tests and code coverage
 - [Netlify](https://www.netlify.com/) : For hosting and servless functions
-- [Github](https://github.com/ "Github") : For Repo Storage and source code management
-- [Git](https://git-scm.com/ "Git") : For Version Control System
+- [Github](https://github.com/ 'Github') : For Repo Storage and source code management
+- [Git](https://git-scm.com/ 'Git') : For Version Control System
