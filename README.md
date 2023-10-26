@@ -48,3 +48,9 @@ npm install
 ```Bash
 npm run dev
 ```
+## 👷 Built with
+- [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) : Programming language used!
+- [Jest](https://jestjs.io/) : For writing tests and code coverage
+- [Netlify](https://www.netlify.com/) : For hosting and servless functions
+- [Github](https://github.com/ "Github") : For Repo Storage and source code management
+- [Git](https://git-scm.com/ "Git") : For Version Control System
