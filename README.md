@@ -59,6 +59,8 @@ npm run dev
 - [Parcel](https://parceljs.org/) : For bundling and building
 - [npm](https://www.npmjs.com/) : JavaScript package manager
 - [Travis CI](https://www.travis-ci.com/) : For continuous integration and continuous delivery
+- [Codecov](https://about.codecov.io/) : For code coverage tracking
+- [snyk](https://snyk.io/) : For scanning for security vulnerabilities
 - [Jest](https://jestjs.io/) : For writing tests and code coverage
 - [Netlify](https://www.netlify.com/) : For hosting and servless functions
 - [Github](https://github.com/ 'Github') : For Repo Storage and source code management
