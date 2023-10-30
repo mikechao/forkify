@@ -9,6 +9,10 @@ script:
   - npm test
 before_deploy:
   - npm run build
+before_install:
+  - pip install --user codecov
+after_success:
+  - codecov --file coverage/lcov.info --disable search
 deploy:
   provider: netlify
   site: ${NETLIFY_SITE_ID}
