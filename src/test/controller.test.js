@@ -537,9 +537,4 @@ describe('controller test in non test env', () => {
     });
     expect(controller.controlSearchResults).toBeUndefined();
   });
-
-  it('should fail on purpose', () => {
-    const number = 23;
-    expect(number).toBe(1);
-  });
 });
