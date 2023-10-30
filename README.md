@@ -3,7 +3,7 @@
   Search over 1,000,000 recipes with the ablity to bookmark and upload custom user recipes
 </p>
 
-[![Build Status](https://app.travis-ci.com/mikechao/forkify.svg?branch=master)](https://app.travis-ci.com/mikechao/forkify) [![codecov](https://codecov.io/gh/mikechao/forkify/graph/badge.svg?token=V2CT5HWZBH)](https://codecov.io/gh/mikechao/forkify)
+[![Build Status](https://app.travis-ci.com/mikechao/forkify.svg?branch=master)](https://app.travis-ci.com/mikechao/forkify) [![codecov](https://codecov.io/gh/mikechao/forkify/graph/badge.svg?token=V2CT5HWZBH)](https://codecov.io/gh/mikechao/forkify) [![Known Vulnerabilities](https://snyk.io/test/github/mikechao/forkify/badge.svg)](https://snyk.io/test/github/mikechao/forkify)
 
 Currently live at <a href="https://forkify-mike-chao.netlify.app/">https://forkify-mike-chao.netlify.app/</a>
 <img src="/readmeAssets/forkify.jpg" alt="forkify screenshot"/>
