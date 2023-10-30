@@ -3,7 +3,7 @@
   Search over 1,000,000 recipes with the ablity to bookmark and upload custom user recipes
 </p>
 <p align="center">
-Currently live at <a href="https://forkify-mike-chao.netlify.app/" target="_blank">https://forkify-mike-chao.netlify.app/</a>
+Currently live at <a href="https://forkify-mike-chao.netlify.app/">https://forkify-mike-chao.netlify.app/</a>
   <img src="/readmeAssets/forkify.jpg" alt="forkify screenshot"/>
 </p>
 
