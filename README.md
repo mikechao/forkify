@@ -6,9 +6,10 @@
 [![Build Status](https://app.travis-ci.com/mikechao/forkify.svg?branch=master)](https://app.travis-ci.com/mikechao/forkify)
 
 Currently live at <a href="https://forkify-mike-chao.netlify.app/">https://forkify-mike-chao.netlify.app/</a>
-  <img src="/readmeAssets/forkify.jpg" alt="forkify screenshot"/>
+<img src="/readmeAssets/forkify.jpg" alt="forkify screenshot"/>
 
 ## 🛠️ Installation Steps
+
 1. Obtain a forkify api key [forkify-api](https://forkify-api.herokuapp.com/v2) and save it
 
 2. Obtain a spoonacular api key [spoonacular](https://spoonacular.com/food-api) and save it
@@ -57,6 +58,7 @@ npm run dev
 - [codingheroes](https://codingheroes.io/) : JavaScript learning course
 - [Parcel](https://parceljs.org/) : For bundling and building
 - [npm](https://www.npmjs.com/) : JavaScript package manager
+- [Travis CI](https://www.travis-ci.com/) : For continuous integration and continuous delivery
 - [Jest](https://jestjs.io/) : For writing tests and code coverage
 - [Netlify](https://www.netlify.com/) : For hosting and servless functions
 - [Github](https://github.com/ 'Github') : For Repo Storage and source code management
