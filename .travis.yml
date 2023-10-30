@@ -8,11 +8,14 @@ cache:
 script:
   - npm test
 before_deploy:
-  - npm install netlify-cli -g
   - npm run build
 deploy:
-  provider: script
+  provider: netlify
+  site: ${NETLIFY_SITE_ID}
+  auth: ${NETLIFY_AUTH}
   edge: true
-  script: netlify deploy --dir=dist --prod
+  dir: 'dist'
+  prod: true
+  message: ${TRAVIS_COMMIT_MESSAGE}
   on:
-    branch: master
+    branch: main
