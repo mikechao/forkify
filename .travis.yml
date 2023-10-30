@@ -12,7 +12,6 @@ before_deploy:
   - npm run build
 deploy:
   provider: script
-  message: $GIT_COMMIT_MESSAGE
   edge: true
   script: netlify deploy --dir=dist --prod
   on:
