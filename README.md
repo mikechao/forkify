@@ -2,16 +2,13 @@
 <p align="center">
   Search over 1,000,000 recipes with the ablity to bookmark and upload custom user recipes
 </p>
-<p align="center">
-<p>
+
 [![Build Status](https://app.travis-ci.com/mikechao/forkify.svg?branch=master)](https://app.travis-ci.com/mikechao/forkify)
-</p>
+
 Currently live at <a href="https://forkify-mike-chao.netlify.app/">https://forkify-mike-chao.netlify.app/</a>
   <img src="/readmeAssets/forkify.jpg" alt="forkify screenshot"/>
-</p>
 
 ## 🛠️ Installation Steps
-
 1. Obtain a forkify api key [forkify-api](https://forkify-api.herokuapp.com/v2) and save it
 
 2. Obtain a spoonacular api key [spoonacular](https://spoonacular.com/food-api) and save it
