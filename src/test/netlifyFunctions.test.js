@@ -117,3 +117,30 @@ describe('netlifyFunctions uploadRecipe test', () => {
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 });
+
+describe('netlifyFunctions searchRecipes test', () => {
+  beforeEach(() => {
+    fetchMock.resetMocks();
+  });
+
+  it('should return the mock data', async () => {
+    const mockData = 'testing data 1234435';
+    fetchMock.mockResponseOnce(mockData);
+    const recipe = testHelper.getRecipe();
+    const data = await netlifyFunctions.getNutritionWidget(recipe);
+    expect(data).not.toBeNull();
+    expect(data).toEqual(mockData);
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('should throw the error when fetch fails', async () => {
+    const message = 'Broken pipe';
+    fetchMock.mockReject(new Error(message));
+    const recipe = testHelper.getRecipe();
+    recipe.ingredients.push({ quantity: 1, unit: 'oz', description: 'pets' });
+    expect(
+      async () => await netlifyFunctions.getNutritionWidget(recipe)
+    ).rejects.toThrow(message);
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
+});
