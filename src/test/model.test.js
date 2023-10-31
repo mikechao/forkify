@@ -4,8 +4,8 @@ import {
   searchRecipes,
   uploadRecipe,
   deleteRecipe,
+  getNutritionWidget,
 } from '../js/netlifyFunctions';
-import { AJAX_SPOON_WIDGET } from '../js/helpers';
 import * as testHelper from './testHelper';
 
 jest.mock('../js/netlifyFunctions', () => ({
@@ -14,11 +14,7 @@ jest.mock('../js/netlifyFunctions', () => ({
   searchRecipes: jest.fn(),
   uploadRecipe: jest.fn(),
   deleteRecipe: jest.fn(),
-}));
-
-jest.mock('../js/helpers', () => ({
-  __esModule: true,
-  AJAX_SPOON_WIDGET: jest.fn(),
+  getNutritionWidget: jest.fn(),
 }));
 
 function mockLocalStorage(includeBookmarked = true) {
@@ -240,7 +236,7 @@ describe('Testing model with empty localstorage', () => {
   test('getNutirtionWidget', async () => {
     // the spoonacular api returns around 22.9kb of html, not going to repeat that here
 
-    AJAX_SPOON_WIDGET.mockImplementation(() => 'bunch of html');
+    getNutritionWidget.mockImplementation(() => 'bunch of html');
     const recipe = testHelper.getRecipe();
     recipe.ingredients.push({
       quantity: 1,
@@ -248,15 +244,15 @@ describe('Testing model with empty localstorage', () => {
       description: 'butter',
     });
     await model.getNutritionWidget(recipe);
-    expect(AJAX_SPOON_WIDGET).toHaveBeenCalled();
-    expect(AJAX_SPOON_WIDGET.mock.lastCall.length).toBe(1);
-    const args = AJAX_SPOON_WIDGET.mock.lastCall[0];
-    expect(args.includes(`servings=${recipe.servings}`)).toBe(true);
+    expect(getNutritionWidget).toHaveBeenCalled();
+    expect(getNutritionWidget.mock.lastCall.length).toBe(1);
+    const args = getNutritionWidget.mock.lastCall[0];
+    expect(args).toBe(recipe);
   });
 
   test('getNutirtionWidget api throws error, model should throw it too', () => {
     const errorMessage = 'This is a testing error';
-    AJAX_SPOON_WIDGET.mockImplementation(() => {
+    getNutritionWidget.mockImplementation(() => {
       throw new Error(errorMessage);
     });
     const recipe = testHelper.getRecipe();

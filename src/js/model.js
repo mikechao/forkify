@@ -1,6 +1,5 @@
 import { async } from 'regenerator-runtime';
-import { RES_PER_PAGE, SPOON_API_URL, SPOON_API_KEY } from './config';
-import { AJAX_SPOON_WIDGET } from './helpers';
+import { RES_PER_PAGE } from './config';
 import * as netlifyFunctions from './netlifyFunctions.js';
 
 export const state = {
@@ -33,17 +32,7 @@ const createRecipeObject = function (data) {
 
 export const getNutritionWidget = async function (recipe) {
   try {
-    const ings = recipe.ingredients
-      .map(
-        ing =>
-          `${ing.quantity === null ? '' : ing.quantity} ${
-            ing.unit === '' ? '' : ing.unit
-          }  ${ing.description}`
-      )
-      .join('\n');
-    const data = await AJAX_SPOON_WIDGET(
-      `${SPOON_API_URL}?apiKey=${SPOON_API_KEY}&showBacklink=true&defaultCss=true&servings=${recipe.servings}&ingredientList=${ings}`
-    );
+    const data = await netlifyFunctions.getNutritionWidget(recipe);
     return data;
   } catch (err) {
     console.error(`${err} 💥💥💥`);

@@ -139,3 +139,25 @@ export const uploadRecipe = async function (recipe) {
     throw err;
   }
 };
+
+export const getNutritionWidget = async function (recipe) {
+  try {
+    const ings = recipe.ingredients
+      .map(
+        ing =>
+          `${ing.quantity === null ? '' : ing.quantity} ${
+            ing.unit === '' ? '' : ing.unit
+          }  ${ing.description} `
+      )
+      .join('\n');
+    const servings = recipe.servings;
+    const apiURL = `${baseURL}getNutritionWidget?ings=${ings}&servings=${servings}`;
+    const res = await fetch(apiURL, {
+      method: 'POST',
+    });
+    const data = await res.text();
+    return data;
+  } catch (err) {
+    throw err;
+  }
+};
