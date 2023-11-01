@@ -44,6 +44,7 @@
     "jest-fetch-mock": "^3.0.3",
     "jest-transform-stub": "^2.0.0",
     "netlify-cli": "^17.0.0",
+    "npm-check-updates": "^16.14.6",
     "parcel": "^2.9.3",
     "process": "^0.11.10",
     "url": "^0.11.3"
