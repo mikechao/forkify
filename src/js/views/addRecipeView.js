@@ -212,6 +212,7 @@ class AddRecipeView extends View {
     label.classList.toggle('hidden');
     label.nextElementSibling.classList.toggle('hidden');
     label.nextElementSibling.value = '';
+    this.resetValidation(label.nextElementSibling);
   }
 
   _removeIngredient() {

@@ -357,8 +357,8 @@ exports[`addRecipeView test should render add and remove ingredient correctly 1`
           <span id="ingredient-2Error" class="hidden">Please use the Format: 'Quantity,Unit,Description'</span>
           <label for="ingredient-3" class="">Ingredient 3</label>
           <input type="text" name="ingredient-3" placeholder="Format: 'Quantity,Unit,Description'" class="" data-validate="isIngredient">
-          <span id="spacer" class="hidden"></span>
-          <span id="ingredient-3Error" class="hidden">Please use the Format: 'Quantity,Unit,Description'</span>
+          <span id="spacer" class="hidden" style="display: none;"></span>
+          <span id="ingredient-3Error" class="hidden" style="display: none;">Please use the Format: 'Quantity,Unit,Description'</span>
           <label for="ingredient-4" class="hidden">Ingredient 4</label>
           <input type="text" name="ingredient-4" placeholder="Format: 'Quantity,Unit,Description'" class="hidden" data-validate="isIngredient">
           <span id="spacer" class="hidden"></span>
@@ -550,20 +550,20 @@ exports[`addRecipeView test should render add and remove ingredient correctly 2`
           <span id="ingredient-2Error" class="hidden">Please use the Format: 'Quantity,Unit,Description'</span>
           <label for="ingredient-3" class="">Ingredient 3</label>
           <input type="text" name="ingredient-3" placeholder="Format: 'Quantity,Unit,Description'" class="" data-validate="isIngredient">
-          <span id="spacer" class="hidden"></span>
-          <span id="ingredient-3Error" class="hidden">Please use the Format: 'Quantity,Unit,Description'</span>
+          <span id="spacer" class="hidden" style="display: none;"></span>
+          <span id="ingredient-3Error" class="hidden" style="display: none;">Please use the Format: 'Quantity,Unit,Description'</span>
           <label for="ingredient-4" class="">Ingredient 4</label>
           <input type="text" name="ingredient-4" placeholder="Format: 'Quantity,Unit,Description'" class="" data-validate="isIngredient">
-          <span id="spacer" class="hidden"></span>
-          <span id="ingredient-4Error" class="hidden">Please use the Format: 'Quantity,Unit,Description'</span>
+          <span id="spacer" class="hidden" style="display: none;"></span>
+          <span id="ingredient-4Error" class="hidden" style="display: none;">Please use the Format: 'Quantity,Unit,Description'</span>
           <label for="ingredient-5" class="">Ingredient 5</label>
           <input type="text" name="ingredient-5" placeholder="Format: 'Quantity,Unit,Description'" class="" data-validate="isIngredient">
-          <span id="spacer" class="hidden"></span>
-          <span id="ingredient-5Error" class="hidden">Please use the Format: 'Quantity,Unit,Description'</span>
+          <span id="spacer" class="hidden" style="display: none;"></span>
+          <span id="ingredient-5Error" class="hidden" style="display: none;">Please use the Format: 'Quantity,Unit,Description'</span>
           <label for="ingredient-6" class="">Ingredient 6</label>
           <input type="text" name="ingredient-6" placeholder="Format: 'Quantity,Unit,Description'" class="" data-validate="isIngredient">
-          <span id="spacer" class="hidden"></span>
-          <span id="ingredient-6Error" class="hidden">Please use the Format: 'Quantity,Unit,Description'</span>
+          <span id="spacer" class="hidden" style="display: none;"></span>
+          <span id="ingredient-6Error" class="hidden" style="display: none;">Please use the Format: 'Quantity,Unit,Description'</span>
         <label for="ingredient-7">Ingredient 7</label><input type="text" name="ingredient-7" placeholder="Format: 'Quantity,Unit,Description'" data-validate="isIngredient"><span id="spacer" class="hidden"></span><span id="ingredient-7Error" class="hidden">Please use the Format: 'Quantity,Unit,Description'</span></div>
 
         <button class="btn upload__btn">
@@ -743,20 +743,20 @@ exports[`addRecipeView test should render add and remove ingredient correctly 3`
           <span id="ingredient-2Error" class="hidden">Please use the Format: 'Quantity,Unit,Description'</span>
           <label for="ingredient-3" class="hidden">Ingredient 3</label>
           <input type="text" name="ingredient-3" placeholder="Format: 'Quantity,Unit,Description'" class="hidden" data-validate="isIngredient">
-          <span id="spacer" class="hidden"></span>
-          <span id="ingredient-3Error" class="hidden">Please use the Format: 'Quantity,Unit,Description'</span>
+          <span id="spacer" class="hidden" style="display: none;"></span>
+          <span id="ingredient-3Error" class="hidden" style="display: none;">Please use the Format: 'Quantity,Unit,Description'</span>
           <label for="ingredient-4" class="hidden">Ingredient 4</label>
           <input type="text" name="ingredient-4" placeholder="Format: 'Quantity,Unit,Description'" class="hidden" data-validate="isIngredient">
-          <span id="spacer" class="hidden"></span>
-          <span id="ingredient-4Error" class="hidden">Please use the Format: 'Quantity,Unit,Description'</span>
+          <span id="spacer" class="hidden" style="display: none;"></span>
+          <span id="ingredient-4Error" class="hidden" style="display: none;">Please use the Format: 'Quantity,Unit,Description'</span>
           <label for="ingredient-5" class="hidden">Ingredient 5</label>
           <input type="text" name="ingredient-5" placeholder="Format: 'Quantity,Unit,Description'" class="hidden" data-validate="isIngredient">
-          <span id="spacer" class="hidden"></span>
-          <span id="ingredient-5Error" class="hidden">Please use the Format: 'Quantity,Unit,Description'</span>
+          <span id="spacer" class="hidden" style="display: none;"></span>
+          <span id="ingredient-5Error" class="hidden" style="display: none;">Please use the Format: 'Quantity,Unit,Description'</span>
           <label for="ingredient-6" class="hidden">Ingredient 6</label>
           <input type="text" name="ingredient-6" placeholder="Format: 'Quantity,Unit,Description'" class="hidden" data-validate="isIngredient">
-          <span id="spacer" class="hidden"></span>
-          <span id="ingredient-6Error" class="hidden">Please use the Format: 'Quantity,Unit,Description'</span>
+          <span id="spacer" class="hidden" style="display: none;"></span>
+          <span id="ingredient-6Error" class="hidden" style="display: none;">Please use the Format: 'Quantity,Unit,Description'</span>
         </div>
 
         <button class="btn upload__btn">
@@ -1888,20 +1888,20 @@ exports[`addRecipeView test should render the ingredient validation message when
           <span id="ingredient-2Error" class="" style="display: inline;">Please use the Format: 'Quantity,Unit,Description'</span>
           <label for="ingredient-3" class="">Ingredient 3</label>
           <input type="text" name="ingredient-3" placeholder="Format: 'Quantity,Unit,Description'" class="" data-validate="isIngredient">
-          <span id="spacer" class="hidden"></span>
-          <span id="ingredient-3Error" class="hidden">Please use the Format: 'Quantity,Unit,Description'</span>
+          <span id="spacer" class="hidden" style="display: none;"></span>
+          <span id="ingredient-3Error" class="hidden" style="display: none;">Please use the Format: 'Quantity,Unit,Description'</span>
           <label for="ingredient-4" class="">Ingredient 4</label>
           <input type="text" name="ingredient-4" placeholder="Format: 'Quantity,Unit,Description'" class="" data-validate="isIngredient">
-          <span id="spacer" class="hidden"></span>
-          <span id="ingredient-4Error" class="hidden">Please use the Format: 'Quantity,Unit,Description'</span>
+          <span id="spacer" class="hidden" style="display: none;"></span>
+          <span id="ingredient-4Error" class="hidden" style="display: none;">Please use the Format: 'Quantity,Unit,Description'</span>
           <label for="ingredient-5" class="">Ingredient 5</label>
           <input type="text" name="ingredient-5" placeholder="Format: 'Quantity,Unit,Description'" class="" data-validate="isIngredient">
-          <span id="spacer" class="hidden"></span>
-          <span id="ingredient-5Error" class="hidden">Please use the Format: 'Quantity,Unit,Description'</span>
+          <span id="spacer" class="hidden" style="display: none;"></span>
+          <span id="ingredient-5Error" class="hidden" style="display: none;">Please use the Format: 'Quantity,Unit,Description'</span>
           <label for="ingredient-6" class="">Ingredient 6</label>
           <input type="text" name="ingredient-6" placeholder="Format: 'Quantity,Unit,Description'" class="" data-validate="isIngredient">
-          <span id="spacer" class="hidden"></span>
-          <span id="ingredient-6Error" class="hidden">Please use the Format: 'Quantity,Unit,Description'</span>
+          <span id="spacer" class="hidden" style="display: none;"></span>
+          <span id="ingredient-6Error" class="hidden" style="display: none;">Please use the Format: 'Quantity,Unit,Description'</span>
         <label for="ingredient-7">Ingredient 7</label><input type="text" name="ingredient-7" placeholder="Format: 'Quantity,Unit,Description'" data-validate="isIngredient" value="another invalid ingredient" class="invalid"><span id="spacer" class="" style="display: inline;"></span><span id="ingredient-7Error" class="" style="display: inline;">Please use the Format: 'Quantity,Unit,Description'</span></div>
 
         <button class="btn upload__btn">
