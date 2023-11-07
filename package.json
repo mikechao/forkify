@@ -4,6 +4,7 @@
   "description": "Recipe application",
   "default": "index.html",
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "start": "parcel index.html",
     "build": "parcel build index.html --dist-dir ./dist",
     "dev": "netlify dev",
@@ -35,6 +36,10 @@
   "devDependencies": {
     "@babel/core": "^7.23.2",
     "@babel/preset-env": "^7.23.2",
+    "@parcel/config-default": "^2.10.1",
+    "@parcel/core": "^2.10.2",
+    "@parcel/transformer-js": "^2.10.2",
+    "@parcel/transformer-react-refresh-wrap": "^2.10.2",
     "@parcel/transformer-sass": "^2.10.1",
     "babel-jest": "^29.7.0",
     "envinfo": "^7.11.0",
@@ -44,7 +49,6 @@
     "jest-fetch-mock": "^3.0.3",
     "jest-transform-stub": "^2.0.0",
     "netlify-cli": "^17.0.1",
-    "npm-check-updates": "^16.14.6",
     "parcel": "^2.10.1",
     "process": "^0.11.10",
     "url": "^0.11.3"

@@ -3,14 +3,20 @@ language: node_js
 node_js:
   - 18
 cache:
+  npm: false
   directories:
-    - node_modules
+    - '~/.pnpm-store'
 script:
-  - npm test
+  - pnpm test
 before_deploy:
-  - npm run build
+  - pnpm run build
 before_install:
   - pip install --user codecov
+  - corepack enable
+  - corepack prepare pnpm@latest-8 --activate
+  - pnpm config set store-dir ~/.pnpm-store
+install:
+  - pnpm install
 after_success:
   - codecov --file coverage/lcov.info --disable search
 deploy:
