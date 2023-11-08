@@ -42,13 +42,13 @@ SPOON_API_KEY=key from step 2
 7. Install NPM packages
 
 ```Bash
-npm install
+pnpm install
 ```
 
 8. Start dev server
 
 ```Bash
-npm run dev
+pnpm run dev
 ```
 
 ## 👷 Built with
@@ -57,7 +57,7 @@ npm run dev
 - [Visual Studio Code](https://code.visualstudio.com/) : Integrated development environment
 - [codingheroes](https://codingheroes.io/) : JavaScript learning course
 - [Parcel](https://parceljs.org/) : For bundling and building
-- [npm](https://www.npmjs.com/) : JavaScript package manager
+- [PnPM](https://pnpm.io/) : JavaScript package manager
 - [Travis CI](https://www.travis-ci.com/) : For continuous integration and continuous delivery
 - [Codecov](https://about.codecov.io/) : For code coverage tracking
 - [snyk](https://snyk.io/) : For scanning for security vulnerabilities
